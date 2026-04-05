@@ -1,0 +1,1947 @@
+openapi: 3.0.3
+info:
+  title: Anam AI API
+  description: API for managing realtime AI avatars, personas, voices, sessions, tools, knowledge bases, and share links.
+  version: "1.0"
+servers:
+  - url: https://api.anam.ai
+    description: Anam API
+security:
+  - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    VoiceDetectionOptions:
+      type: object
+      description: Options for voice activity detection during user speech input.
+      properties:
+        endOfSpeechSensitivity:
+          type: number
+          description: Sensitivity for detecting end of speech, between 0 (least sensitive) and 1 (most sensitive).
+          minimum: 0
+          maximum: 1
+        silenceBeforeSkipTurnSeconds:
+          type: number
+          description: Duration of silence (in seconds) before the current user turn is skipped.
+          minimum: 2
+          maximum: 30
+        silenceBeforeSessionEndSeconds:
+          type: number
+          description: Duration of silence (in seconds) before the session is automatically ended.
+          minimum: 0
+        silenceBeforeAutoEndTurnSeconds:
+          type: number
+          description: Duration of silence (in seconds) before the user turn is automatically ended.
+          minimum: 0.5
+          maximum: 10
+        speechEnhancementLevel:
+          type: number
+          description: Level of speech enhancement to apply, 0 (no speech enhancement) 1 (max speech enhancement).
+          minimum: 0
+          maximum: 1
+    ElevenLabsV1VoiceGenerationOptions:
+      type: object
+      description: Voice generation options for ElevenLabs V1 models.
+      properties:
+        stability:
+          type: number
+          description: Controls how stable the generated voice is between each generation.
+          minimum: 0
+          maximum: 1
+        similarityBoost:
+          type: number
+          description: Controls how close the generated voice is to the original speaker.
+          minimum: 0
+          maximum: 1
+        speed:
+          type: number
+          description: Controls the speed of the spoken voice as a multiplier.
+          minimum: 0.7
+          maximum: 1.2
+    ElevenLabsV2VoiceGenerationOptions:
+      type: object
+      description: Voice generation options for ElevenLabs V2 models.
+      properties:
+        stability:
+          type: number
+          description: Controls how stable the generated voice is between each generation.
+          minimum: 0
+          maximum: 1
+        similarityBoost:
+          type: number
+          description: Controls how close the generated voice is to the original speaker.
+          minimum: 0
+          maximum: 1
+        style:
+          type: number
+          description: Amplifies the style of the original speaker.
+          minimum: 0
+          maximum: 1
+        useSpeakerBoost:
+          type: boolean
+          description: Whether to use speaker boost for the generated voice.
+        speed:
+          type: number
+          description: Controls the speed of the spoken voice as a multiplier.
+          minimum: 0.7
+          maximum: 1.2
+        model:
+          type: string
+          description: The ElevenLabs model ID to use for voice generation.
+    CartesiaSonic3VoiceGenerationOptions:
+      type: object
+      description: Voice generation options for Cartesia Sonic-3 models.
+      properties:
+        volume:
+          type: number
+          description: Controls the volume level of the generated voice as a multiplier.
+          minimum: 0.5
+          maximum: 2
+        speed:
+          type: number
+          description: Controls the speed of the spoken voice as a multiplier.
+          minimum: 0.6
+          maximum: 1.5
+        emotion:
+          type: string
+          description: Sets the emotional tone of the generated voice.
+          enum:
+            - neutral
+            - calm
+            - angry
+            - content
+            - sad
+            - scared
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+        lastPage:
+          type: integer
+        currentPage:
+          type: integer
+        perPage:
+          type: integer
+        prev:
+          type: integer
+          nullable: true
+        next:
+          type: integer
+          nullable: true
+    Voice:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        provider:
+          type: string
+        providerVoiceId:
+          type: string
+        providerModelId:
+          type: string
+          nullable: true
+        sampleUrl:
+          type: string
+          nullable: true
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+            - neutral
+          nullable: true
+        country:
+          type: string
+          nullable: true
+          description: ISO 3166-1 alpha-2 country code.
+        description:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        createdByOrganizationId:
+          type: string
+          nullable: true
+    Avatar:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        variantName:
+          type: string
+        imageUrl:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Tool:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the tool.
+        name:
+          type: string
+          description: Name of the tool.
+        description:
+          type: string
+          description: Description of what the tool does.
+        type:
+          type: string
+          enum:
+            - CLIENT
+            - SERVER_RAG
+            - SERVER_WEBHOOK
+            - SYSTEM
+          description: Type of tool.
+        config:
+          type: object
+          description: Type-specific configuration.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        usageCount:
+          type: integer
+          description: Number of personas using this tool.
+    TranscriptMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - user
+            - persona
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+          nullable: true
+        speakingDurationSeconds:
+          type: number
+          nullable: true
+        wasInterrupted:
+          type: boolean
+          description: Only present for persona messages.
+    SessionTranscript:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        personaName:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+          nullable: true
+        durationMs:
+          type: integer
+          nullable: true
+        totalMessages:
+          type: integer
+        transcriptsEnabled:
+          type: boolean
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranscriptMessage'
+    PersonaConfig:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the persona.
+        description:
+          type: string
+          description: Description of the persona.
+        avatarId:
+          type: string
+          description: The avatar to use.
+        avatarModel:
+          type: string
+          enum:
+            - cara-2
+            - cara-3
+            - cara-4-latest
+          description: Avatar model version.
+        voiceId:
+          type: string
+          description: The voice to use.
+        llmId:
+          type: string
+          description: The LLM to use.
+        systemPrompt:
+          type: string
+          description: System prompt for the LLM.
+        skipGreeting:
+          type: boolean
+          description: Whether to skip the greeting message.
+        zeroDataRetention:
+          type: boolean
+          description: When true, session data is not stored after the conversation ends.
+        voiceDetectionOptions:
+          $ref: '#/components/schemas/VoiceDetectionOptions'
+        languageCode:
+          type: string
+          description: ISO 639-1 language code override for transcription.
+        toolIds:
+          type: array
+          items:
+            type: string
+          description: Array of tool IDs to attach to the persona.
+
+paths:
+  /v1/auth/session-token:
+    post:
+      summary: Create session token
+      description: Creates a temporary session token for client-side use. The session token is valid for 1 hour.
+      operationId: createSessionToken
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientLabel:
+                  type: string
+                  description: Identifier for the session.
+                personaConfig:
+                  type: object
+                  description: Persona configuration. Either provide inline config or a personaId.
+                  properties:
+                    name:
+                      type: string
+                    avatarId:
+                      type: string
+                    avatarModel:
+                      type: string
+                      enum:
+                        - cara-2
+                        - cara-3
+                        - cara-4-latest
+                    voiceId:
+                      type: string
+                    llmId:
+                      type: string
+                    systemPrompt:
+                      type: string
+                    maxSessionLengthSeconds:
+                      type: number
+                    skipGreeting:
+                      type: boolean
+                    personaId:
+                      type: string
+                      description: Use an existing persona by ID instead of inline config.
+                    voiceDetectionOptions:
+                      $ref: '#/components/schemas/VoiceDetectionOptions'
+                    languageCode:
+                      type: string
+                sessionOptions:
+                  type: object
+                  properties:
+                    sessionReplay:
+                      type: object
+                      properties:
+                        enableSessionReplay:
+                          type: boolean
+                          default: true
+      responses:
+        '200':
+          description: Successfully created session token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionToken:
+                    type: string
+                    description: The session token for client-side use.
+        '400':
+          description: Invalid request body.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/voices:
+    get:
+      summary: List voices
+      description: Returns a paginated list of all voices.
+      operationId: listVoices
+      tags:
+        - Voices
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of voices per page (max 100).
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term to filter voices by display name.
+      responses:
+        '200':
+          description: Successfully retrieved voices.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Voice'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - Account does not have access.
+        '404':
+          description: Not Found - No voices found.
+        '500':
+          description: Server error.
+    post:
+      summary: Create voice
+      description: Create a new voice by cloning from an audio file.
+      operationId: createVoice
+      tags:
+        - Voices
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - audioFile
+              properties:
+                name:
+                  type: string
+                  description: Display name for the cloned voice.
+                audioFile:
+                  type: string
+                  format: binary
+                  description: Audio file to clone the voice from.
+                description:
+                  type: string
+                  description: Optional description of the voice.
+                language:
+                  type: string
+                  default: en
+                  description: Language code for the voice.
+                enhance:
+                  type: boolean
+                  default: true
+                  description: Whether to enhance the voice quality.
+      responses:
+        '201':
+          description: Successfully created voice clone.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Voice'
+        '400':
+          description: Bad request - Invalid voice data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - Requires enterprise plan.
+        '500':
+          description: Server error.
+
+  /v1/voices/{id}:
+    get:
+      summary: Get voice
+      description: Returns a voice by ID.
+      operationId: getVoice
+      tags:
+        - Voices
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Voice ID.
+      responses:
+        '200':
+          description: Successfully retrieved voice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Voice'
+        '400':
+          description: Bad request - Invalid voice ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Voice not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update voice
+      description: Update a voice by ID.
+      operationId: updateVoice
+      tags:
+        - Voices
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Voice ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - displayName
+              properties:
+                displayName:
+                  type: string
+                  description: New display name for the voice.
+                providerModelId:
+                  type: string
+                  description: New provider model ID for the voice.
+                gender:
+                  type: string
+                  enum:
+                    - male
+                    - female
+                    - neutral
+                  nullable: true
+                country:
+                  type: string
+                  nullable: true
+                  description: ISO 3166-1 alpha-2 country code.
+                description:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: Successfully updated voice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Voice'
+        '400':
+          description: Bad request - Invalid voice data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Voice not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete voice
+      description: Delete a voice by ID.
+      operationId: deleteVoice
+      tags:
+        - Voices
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Voice ID.
+      responses:
+        '200':
+          description: Successfully deleted voice.
+        '400':
+          description: Bad request - Invalid voice ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Voice not found.
+        '500':
+          description: Server error.
+
+  /v1/avatars:
+    get:
+      summary: List avatars
+      description: Returns a paginated list of all avatars.
+      operationId: listAvatars
+      tags:
+        - Avatars
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of avatars per page (max 100).
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term to filter avatars by display name.
+        - in: query
+          name: onlyOneShot
+          schema:
+            type: boolean
+            default: false
+          description: Only return one-shot avatars.
+      responses:
+        '200':
+          description: Successfully retrieved avatars.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Avatar'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create avatar
+      description: Create a new custom avatar from an image.
+      operationId: createAvatar
+      tags:
+        - Avatars
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - displayName
+              properties:
+                displayName:
+                  type: string
+                  description: Display name for the avatar (3-50 characters).
+                imageFile:
+                  type: string
+                  format: binary
+                  description: Image file (JPEG, PNG, WebP; max 4.5MB).
+                imageUrl:
+                  type: string
+                  description: Image URL (JPEG, PNG, WebP; max 4.5MB).
+      responses:
+        '201':
+          description: Successfully created avatar.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Avatar'
+        '400':
+          description: Bad request - Invalid avatar data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - Requires enterprise plan.
+        '422':
+          description: Image processing failure.
+        '500':
+          description: Server error.
+
+  /v1/personas:
+    get:
+      summary: List personas
+      description: Returns a paginated list of all personas.
+      operationId: listPersonas
+      tags:
+        - Personas
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of items per page.
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Filter personas by name.
+      responses:
+        '200':
+          description: Successfully retrieved personas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PersonaConfig'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create persona
+      description: Create a new persona with avatar, voice, LLM, and system prompt configuration.
+      operationId: createPersona
+      tags:
+        - Personas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonaConfig'
+      responses:
+        '201':
+          description: Successfully created persona.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonaConfig'
+        '400':
+          description: Bad request - Invalid persona data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/personas/{id}:
+    get:
+      summary: Get persona
+      description: Returns a persona by ID.
+      operationId: getPersona
+      tags:
+        - Personas
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Persona ID.
+      responses:
+        '200':
+          description: Successfully retrieved persona.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonaConfig'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Persona not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update persona
+      description: Update a persona by ID.
+      operationId: updatePersona
+      tags:
+        - Personas
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Persona ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonaConfig'
+      responses:
+        '200':
+          description: Successfully updated persona.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonaConfig'
+        '400':
+          description: Bad request - Invalid persona data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Persona not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete persona
+      description: Delete a persona by ID.
+      operationId: deletePersona
+      tags:
+        - Personas
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Persona ID.
+      responses:
+        '200':
+          description: Successfully deleted persona.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Persona not found.
+        '500':
+          description: Server error.
+
+  /v1/llms:
+    get:
+      summary: List LLMs
+      description: Returns a list of all LLMs available to the organization.
+      operationId: listLlms
+      tags:
+        - LLMs
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+          description: Number of items per page.
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term to filter LLMs.
+        - in: query
+          name: includeDefaults
+          schema:
+            type: boolean
+          description: Include default LLMs in the response.
+      responses:
+        '200':
+          description: Successfully retrieved LLMs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        displayName:
+                          type: string
+                        description:
+                          type: string
+                          nullable: true
+                        llmFormat:
+                          type: string
+                        modelName:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          nullable: true
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create LLM
+      description: Create a new LLM configuration.
+      operationId: createLlm
+      tags:
+        - LLMs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - displayName
+                - urls
+                - llmFormat
+                - modelName
+                - secret
+              properties:
+                displayName:
+                  type: string
+                description:
+                  type: string
+                urls:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        format: uri
+                llmFormat:
+                  type: string
+                  enum:
+                    - openai
+                    - azure_openai
+                    - groq_openai
+                    - gemini
+                    - advanced_voice
+                    - none
+                modelName:
+                  type: string
+                secret:
+                  type: string
+                metadata:
+                  type: object
+                reasoningEffort:
+                  type: string
+                  enum:
+                    - default
+                    - low
+                    - medium
+                    - high
+                reasoningFormat:
+                  type: string
+                  enum:
+                    - parsed
+                    - raw
+                    - hidden
+      responses:
+        '201':
+          description: Successfully created LLM.
+        '400':
+          description: Bad request - Invalid LLM data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/llms/{id}:
+    get:
+      summary: Get LLM
+      description: Get a specific LLM by ID.
+      operationId: getLlm
+      tags:
+        - LLMs
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The LLM ID.
+      responses:
+        '200':
+          description: Successfully retrieved LLM.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: LLM not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update LLM
+      description: Update an LLM configuration.
+      operationId: updateLlm
+      tags:
+        - LLMs
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The LLM ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayName:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                llmFormat:
+                  type: string
+                  enum:
+                    - openai
+                    - azure_openai
+                    - groq_openai
+                    - anthropic
+                    - custom
+                modelName:
+                  type: string
+                secret:
+                  type: string
+                metadata:
+                  type: object
+                reasoningEffort:
+                  type: string
+                  enum:
+                    - default
+                    - low
+                    - medium
+                    - high
+                reasoningFormat:
+                  type: string
+                  enum:
+                    - parsed
+                    - raw
+                    - hidden
+      responses:
+        '200':
+          description: Successfully updated LLM.
+        '400':
+          description: Bad request - Invalid LLM data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - Cannot update default LLMs.
+        '404':
+          description: LLM not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete LLM
+      description: Delete an LLM configuration.
+      operationId: deleteLlm
+      tags:
+        - LLMs
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The LLM ID.
+      responses:
+        '204':
+          description: Successfully deleted LLM.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - Cannot delete default LLMs.
+        '404':
+          description: LLM not found.
+        '500':
+          description: Server error.
+
+  /v1/tools:
+    get:
+      summary: List tools
+      description: Returns a list of all tools for the organization.
+      operationId: listTools
+      tags:
+        - Tools
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of items per page.
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Filter tools by name, description, or ID.
+      responses:
+        '200':
+          description: Successfully retrieved tools.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tool'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create tool
+      description: Create a new tool for function calling in persona sessions.
+      operationId: createTool
+      tags:
+        - Tools
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - type
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the tool (pattern [a-zA-Z0-9_.-]+).
+                description:
+                  type: string
+                  description: Description of what the tool does.
+                type:
+                  type: string
+                  enum:
+                    - CLIENT
+                    - SERVER_RAG
+                    - SERVER_WEBHOOK
+                    - SYSTEM
+                  description: Type of tool.
+                config:
+                  type: object
+                  description: Type-specific configuration for the tool.
+      responses:
+        '201':
+          description: Successfully created tool.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tool'
+        '400':
+          description: Bad request - Invalid tool data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/tools/{id}:
+    get:
+      summary: Get tool
+      description: Get a tool by ID.
+      operationId: getTool
+      tags:
+        - Tools
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Tool ID.
+      responses:
+        '200':
+          description: Successfully retrieved tool.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tool'
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Tool not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update tool
+      description: Update an existing tool.
+      operationId: updateTool
+      tags:
+        - Tools
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Tool ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Updated name for the tool.
+                description:
+                  type: string
+                  description: Updated description of what the tool does.
+                type:
+                  type: string
+                  enum:
+                    - CLIENT
+                    - SERVER_RAG
+                    - SERVER_WEBHOOK
+                    - SYSTEM
+                config:
+                  type: object
+                  description: Updated type-specific configuration.
+      responses:
+        '200':
+          description: Successfully updated tool.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tool'
+        '400':
+          description: Bad request - Invalid tool data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - System tools cannot be modified.
+        '404':
+          description: Tool not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete tool
+      description: Delete a tool (soft-deleted).
+      operationId: deleteTool
+      tags:
+        - Tools
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Tool ID.
+      responses:
+        '204':
+          description: Successfully deleted tool.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '403':
+          description: Forbidden - System tools cannot be deleted.
+        '404':
+          description: Tool not found.
+        '500':
+          description: Server error.
+
+  /v1/sessions:
+    get:
+      summary: List sessions
+      description: Returns a paginated list of all sessions for the organization.
+      operationId: listSessions
+      tags:
+        - Sessions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of items per page (max 100).
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term to filter sessions by ID or client label.
+        - in: query
+          name: apiKeyId
+          schema:
+            type: string
+            format: uuid
+          description: Filter sessions by API key ID.
+        - in: query
+          name: personaId
+          schema:
+            type: string
+            format: uuid
+          description: Filter sessions by persona ID.
+      responses:
+        '200':
+          description: Successfully retrieved sessions.
+        '400':
+          description: Bad request - Invalid query parameters.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/sessions/{id}:
+    get:
+      summary: Get session
+      description: Returns a session by ID.
+      operationId: getSession
+      tags:
+        - Sessions
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Session ID.
+      responses:
+        '200':
+          description: Successfully retrieved session.
+        '400':
+          description: Bad request - Invalid session ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Session not found.
+        '500':
+          description: Server error.
+
+  /v1/sessions/{id}/transcript:
+    get:
+      summary: Get session transcript
+      description: Returns the conversation transcript for a session.
+      operationId: getSessionTranscript
+      tags:
+        - Sessions
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Session ID.
+      responses:
+        '200':
+          description: Successfully retrieved transcript.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionTranscript'
+        '400':
+          description: Bad request - Invalid session ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Session not found or no transcript available.
+        '500':
+          description: Server error.
+
+  /v1/sessions/{id}/recording:
+    get:
+      summary: Get session recording
+      description: Returns a presigned URL to download the session recording.
+      operationId: getSessionRecording
+      tags:
+        - Sessions
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Session ID.
+      responses:
+        '200':
+          description: Successfully retrieved recording URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recordingUrl:
+                    type: string
+                    description: Presigned URL to download the recording (expires in 1 hour).
+        '400':
+          description: Bad request - Invalid session ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Session or recording not found.
+        '500':
+          description: Server error.
+
+  /v1/share-links:
+    get:
+      summary: List share links
+      description: Returns a list of all share links for the organization.
+      operationId: listShareLinks
+      tags:
+        - ShareLinks
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: Number of items per page (max 100).
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search term to filter share links.
+        - in: query
+          name: personaId
+          schema:
+            type: string
+            format: uuid
+          description: Filter share links by persona ID.
+      responses:
+        '200':
+          description: Successfully retrieved share links.
+        '400':
+          description: Bad request - Invalid query parameters.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create share link
+      description: Create a new share link.
+      operationId: createShareLink
+      tags:
+        - ShareLinks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - personaId
+              properties:
+                personaId:
+                  type: string
+                  format: uuid
+                expiresInHours:
+                  type: number
+                  default: 168
+                usageLimit:
+                  type: number
+                  default: 10
+      responses:
+        '201':
+          description: Successfully created share link.
+        '400':
+          description: Bad request - Invalid share link data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Persona not found.
+        '500':
+          description: Server error.
+
+  /v1/share-links/{id}:
+    get:
+      summary: Get share link
+      description: Returns a share link by ID.
+      operationId: getShareLink
+      tags:
+        - ShareLinks
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Share link ID.
+      responses:
+        '200':
+          description: Successfully retrieved share link.
+        '400':
+          description: Bad request - Invalid share link ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Share link not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update share link
+      description: Update a share link by ID.
+      operationId: updateShareLink
+      tags:
+        - ShareLinks
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Share link ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expiresInHours:
+                  type: number
+                usageLimit:
+                  type: number
+      responses:
+        '200':
+          description: Successfully updated share link.
+        '400':
+          description: Bad request - Invalid share link data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Share link not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete share link
+      description: Delete a share link by ID.
+      operationId: deleteShareLink
+      tags:
+        - ShareLinks
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Share link ID.
+      responses:
+        '200':
+          description: Successfully deleted share link.
+        '400':
+          description: Bad request - Invalid share link ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Share link not found.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/groups:
+    get:
+      summary: List knowledge groups
+      description: Returns a list of all knowledge groups for the organization.
+      operationId: listKnowledgeGroups
+      tags:
+        - Knowledge
+      responses:
+        '200':
+          description: Successfully retrieved knowledge groups.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+    post:
+      summary: Create knowledge group
+      description: Create a new knowledge group for RAG.
+      operationId: createKnowledgeGroup
+      tags:
+        - Knowledge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created knowledge group.
+        '400':
+          description: Bad request - Invalid data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/groups/{id}:
+    get:
+      summary: Get knowledge group
+      description: Get a single knowledge group by ID.
+      operationId: getKnowledgeGroup
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved knowledge group.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update knowledge group
+      description: Update a knowledge group.
+      operationId: updateKnowledgeGroup
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Successfully updated knowledge group.
+        '400':
+          description: Bad request - Invalid data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete knowledge group
+      description: Delete a knowledge group.
+      operationId: deleteKnowledgeGroup
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted knowledge group.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/groups/{id}/search:
+    post:
+      summary: Search knowledge group
+      description: Search for similar content in a knowledge group using vector similarity.
+      operationId: searchKnowledgeGroup
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                limit:
+                  type: integer
+                  minimum: 1
+                  maximum: 20
+                  default: 5
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+        '400':
+          description: Bad request - Invalid search query.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/groups/{id}/documents:
+    get:
+      summary: List knowledge group documents
+      description: Get all documents in a knowledge group.
+      operationId: listKnowledgeGroupDocuments
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved documents.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+    post:
+      summary: Upload knowledge group document
+      description: Upload a document to a knowledge group (PDF, TXT, MD, DOCX, CSV up to 50MB).
+      operationId: uploadKnowledgeGroupDocument
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Document file (PDF, TXT, MD, DOCX, or CSV, max 50MB).
+                chunkSize:
+                  type: integer
+                  default: 1000
+                chunkOverlap:
+                  type: integer
+                  default: 200
+      responses:
+        '201':
+          description: Successfully uploaded document.
+        '400':
+          description: Bad request - Invalid file or parameters.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Knowledge group not found.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/documents/{id}:
+    get:
+      summary: Get knowledge document
+      description: Get a single document by ID.
+      operationId: getKnowledgeDocument
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved document.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Document not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update knowledge document
+      description: Update a document (rename).
+      operationId: updateKnowledgeDocument
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  description: New filename for the document.
+      responses:
+        '200':
+          description: Successfully updated document.
+        '400':
+          description: Bad request - Invalid data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Document not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete knowledge document
+      description: Delete a document from a knowledge group.
+      operationId: deleteKnowledgeDocument
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted document.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Document not found.
+        '500':
+          description: Server error.
+
+  /v1/knowledge/documents/{id}/download:
+    get:
+      summary: Get knowledge document download
+      description: Get a presigned download URL for a knowledge document.
+      operationId: getKnowledgeDocumentDownload
+      tags:
+        - Knowledge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully generated download URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  downloadUrl:
+                    type: string
+                  filename:
+                    type: string
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Document not found.
+        '500':
+          description: Server error.

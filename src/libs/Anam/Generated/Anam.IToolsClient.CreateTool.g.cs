@@ -1,0 +1,43 @@
+#nullable enable
+
+namespace Anam
+{
+    public partial interface IToolsClient
+    {
+        /// <summary>
+        /// Create tool<br/>
+        /// Create a new tool for function calling in persona sessions.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken">The token to cancel the operation with</param>
+        /// <exception cref="global::Anam.ApiException"></exception>
+        global::System.Threading.Tasks.Task<global::Anam.Tool> CreateToolAsync(
+
+            global::Anam.CreateToolRequest request,
+            global::System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Create tool<br/>
+        /// Create a new tool for function calling in persona sessions.
+        /// </summary>
+        /// <param name="name">
+        /// Unique name for the tool (pattern [a-zA-Z0-9_.-]+).
+        /// </param>
+        /// <param name="description">
+        /// Description of what the tool does.
+        /// </param>
+        /// <param name="type">
+        /// Type of tool.
+        /// </param>
+        /// <param name="config">
+        /// Type-specific configuration for the tool.
+        /// </param>
+        /// <param name="cancellationToken">The token to cancel the operation with</param>
+        /// <exception cref="global::System.InvalidOperationException"></exception>
+        global::System.Threading.Tasks.Task<global::Anam.Tool> CreateToolAsync(
+            string name,
+            string description,
+            global::Anam.CreateToolRequestType type,
+            object? config = default,
+            global::System.Threading.CancellationToken cancellationToken = default);
+    }
+}
