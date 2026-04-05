@@ -138,6 +138,40 @@ public static class AnamClientTools
     }
 
     /// <summary>
+    /// Creates an AIFunction tool that searches a knowledge group using vector similarity.
+    /// The knowledgeGroupId is captured at creation time so the LLM only needs to provide a query.
+    /// </summary>
+    public static AIFunction AsSearchKnowledgeTool(
+        this AnamClient client,
+        string knowledgeGroupId)
+    {
+        return AIFunctionFactory.Create(
+            async ([Description("The search query text to find similar content")] string query,
+                   [Description("Maximum number of results to return (default 5)")] int? limit,
+                   CancellationToken cancellationToken) =>
+            {
+                var response = await client.Knowledge.SearchKnowledgeGroupAsync(
+                    id: knowledgeGroupId,
+                    query: query,
+                    limit: limit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return new
+                {
+                    Results = response.Results?.Select(r => new
+                    {
+                        r.Content,
+                        r.Score,
+                        r.DocumentId,
+                        r.Metadata,
+                    }),
+                };
+            },
+            name: "Anam_SearchKnowledge",
+            description: "Search for similar content in an Anam knowledge group using vector similarity. Returns matched content chunks with similarity scores and source document IDs.");
+    }
+
+    /// <summary>
     /// Creates an AIFunction tool that gets the transcript of a session.
     /// </summary>
     public static AIFunction AsGetSessionTranscriptTool(this AnamClient client)
