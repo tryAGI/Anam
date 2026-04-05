@@ -16,6 +16,11 @@ namespace Anam
             global::System.Net.Http.HttpClient httpClient,
             global::System.Net.Http.HttpResponseMessage httpResponseMessage);
 
+        partial void ProcessCreateKnowledgeGroupResponseContent(
+            global::System.Net.Http.HttpClient httpClient,
+            global::System.Net.Http.HttpResponseMessage httpResponseMessage,
+            ref string content);
+
         /// <summary>
         /// Create knowledge group<br/>
         /// Create a new knowledge group for RAG.
@@ -23,7 +28,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        public async global::System.Threading.Tasks.Task CreateKnowledgeGroupAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.KnowledgeGroup> CreateKnowledgeGroupAsync(
 
             global::Anam.CreateKnowledgeGroupRequest request,
             global::System.Threading.CancellationToken cancellationToken = default)
@@ -201,11 +206,18 @@ namespace Anam
                     client: HttpClient,
                     response: __response,
                     content: ref __content);
+                ProcessCreateKnowledgeGroupResponseContent(
+                    httpClient: HttpClient,
+                    httpResponseMessage: __response,
+                    content: ref __content);
 
                 try
                 {
                     __response.EnsureSuccessStatusCode();
 
+                    return
+                        global::Anam.KnowledgeGroup.FromJson(__content, JsonSerializerContext) ??
+                        throw new global::System.InvalidOperationException($"Response deserialization failed for \"{__content}\" ");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -227,6 +239,15 @@ namespace Anam
                 try
                 {
                     __response.EnsureSuccessStatusCode();
+                    using var __content = await __response.Content.ReadAsStreamAsync(
+#if NET5_0_OR_GREATER
+                        cancellationToken
+#endif
+                    ).ConfigureAwait(false);
+
+                    return
+                        await global::Anam.KnowledgeGroup.FromJsonStreamAsync(__content, JsonSerializerContext).ConfigureAwait(false) ??
+                        throw new global::System.InvalidOperationException("Response deserialization failed.");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -265,7 +286,7 @@ namespace Anam
         /// <param name="description"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        public async global::System.Threading.Tasks.Task CreateKnowledgeGroupAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.KnowledgeGroup> CreateKnowledgeGroupAsync(
             string name,
             string? description = default,
             global::System.Threading.CancellationToken cancellationToken = default)
@@ -276,7 +297,7 @@ namespace Anam
                 Description = description,
             };
 
-            await CreateKnowledgeGroupAsync(
+            return await CreateKnowledgeGroupAsync(
                 request: __request,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }

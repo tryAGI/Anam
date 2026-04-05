@@ -24,6 +24,11 @@ namespace Anam
             global::System.Net.Http.HttpClient httpClient,
             global::System.Net.Http.HttpResponseMessage httpResponseMessage);
 
+        partial void ProcessListSessionsResponseContent(
+            global::System.Net.Http.HttpClient httpClient,
+            global::System.Net.Http.HttpResponseMessage httpResponseMessage,
+            ref string content);
+
         /// <summary>
         /// List sessions<br/>
         /// Returns a paginated list of all sessions for the organization.
@@ -39,7 +44,7 @@ namespace Anam
         /// <param name="personaId"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        public async global::System.Threading.Tasks.Task ListSessionsAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.ListSessionsResponse> ListSessionsAsync(
             int? page = default,
             int? perPage = default,
             string? search = default,
@@ -227,11 +232,18 @@ namespace Anam
                     client: HttpClient,
                     response: __response,
                     content: ref __content);
+                ProcessListSessionsResponseContent(
+                    httpClient: HttpClient,
+                    httpResponseMessage: __response,
+                    content: ref __content);
 
                 try
                 {
                     __response.EnsureSuccessStatusCode();
 
+                    return
+                        global::Anam.ListSessionsResponse.FromJson(__content, JsonSerializerContext) ??
+                        throw new global::System.InvalidOperationException($"Response deserialization failed for \"{__content}\" ");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -253,6 +265,15 @@ namespace Anam
                 try
                 {
                     __response.EnsureSuccessStatusCode();
+                    using var __content = await __response.Content.ReadAsStreamAsync(
+#if NET5_0_OR_GREATER
+                        cancellationToken
+#endif
+                    ).ConfigureAwait(false);
+
+                    return
+                        await global::Anam.ListSessionsResponse.FromJsonStreamAsync(__content, JsonSerializerContext).ConfigureAwait(false) ??
+                        throw new global::System.InvalidOperationException("Response deserialization failed.");
                 }
                 catch (global::System.Exception __ex)
                 {

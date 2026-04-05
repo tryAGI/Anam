@@ -9,6 +9,12 @@ namespace Anam
     public sealed partial class PersonaConfig
     {
         /// <summary>
+        /// Unique identifier for the persona.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("id")]
+        public global::System.Guid? Id { get; set; }
+
+        /// <summary>
         /// Name of the persona.
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("name")]
@@ -82,6 +88,18 @@ namespace Anam
         public global::System.Collections.Generic.IList<string>? ToolIds { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("createdAt")]
+        public global::System.DateTime? CreatedAt { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("updatedAt")]
+        public global::System.DateTime? UpdatedAt { get; set; }
+
+        /// <summary>
         /// Additional properties that are not explicitly defined in the schema
         /// </summary>
         [global::System.Text.Json.Serialization.JsonExtensionData]
@@ -90,6 +108,9 @@ namespace Anam
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonaConfig" /> class.
         /// </summary>
+        /// <param name="id">
+        /// Unique identifier for the persona.
+        /// </param>
         /// <param name="name">
         /// Name of the persona.
         /// </param>
@@ -126,10 +147,13 @@ namespace Anam
         /// <param name="toolIds">
         /// Array of tool IDs to attach to the persona.
         /// </param>
+        /// <param name="createdAt"></param>
+        /// <param name="updatedAt"></param>
 #if NET7_0_OR_GREATER
         [global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
 #endif
         public PersonaConfig(
+            global::System.Guid? id,
             string? name,
             string? description,
             string? avatarId,
@@ -141,8 +165,11 @@ namespace Anam
             bool? zeroDataRetention,
             global::Anam.VoiceDetectionOptions? voiceDetectionOptions,
             string? languageCode,
-            global::System.Collections.Generic.IList<string>? toolIds)
+            global::System.Collections.Generic.IList<string>? toolIds,
+            global::System.DateTime? createdAt,
+            global::System.DateTime? updatedAt)
         {
+            this.Id = id;
             this.Name = name;
             this.Description = description;
             this.AvatarId = avatarId;
@@ -155,6 +182,8 @@ namespace Anam
             this.VoiceDetectionOptions = voiceDetectionOptions;
             this.LanguageCode = languageCode;
             this.ToolIds = toolIds;
+            this.CreatedAt = createdAt;
+            this.UpdatedAt = updatedAt;
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task UploadKnowledgeGroupDocumentAsync(
+        global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
             string id,
 
             global::Anam.UploadKnowledgeGroupDocumentRequest request,
@@ -36,7 +36,7 @@ namespace Anam
         /// </param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        global::System.Threading.Tasks.Task UploadKnowledgeGroupDocumentAsync(
+        global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
             string id,
             byte[] file,
             string filename,

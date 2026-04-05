@@ -9,9 +9,10 @@ public partial class Tests
     {
         var client = GetAuthenticatedClient();
 
-        // Sessions endpoint returns void (no response body in spec)
-        await client.Sessions.ListSessionsAsync(
+        var response = await client.Sessions.ListSessionsAsync(
             page: 1,
             perPage: 10);
+
+        response.Data.Should().NotBeNull();
     }
 }

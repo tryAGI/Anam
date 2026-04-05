@@ -11,7 +11,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task CreateLlmAsync(
+        global::System.Threading.Tasks.Task<global::Anam.Llm> CreateLlmAsync(
 
             global::Anam.CreateLlmRequest request,
             global::System.Threading.CancellationToken cancellationToken = default);
@@ -30,7 +30,7 @@ namespace Anam
         /// <param name="reasoningFormat"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        global::System.Threading.Tasks.Task CreateLlmAsync(
+        global::System.Threading.Tasks.Task<global::Anam.Llm> CreateLlmAsync(
             string displayName,
             global::System.Collections.Generic.IList<global::Anam.CreateLlmRequestUrl> urls,
             global::Anam.CreateLlmRequestLlmFormat llmFormat,

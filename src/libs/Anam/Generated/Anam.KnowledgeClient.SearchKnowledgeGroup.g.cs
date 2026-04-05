@@ -18,6 +18,11 @@ namespace Anam
             global::System.Net.Http.HttpClient httpClient,
             global::System.Net.Http.HttpResponseMessage httpResponseMessage);
 
+        partial void ProcessSearchKnowledgeGroupResponseContent(
+            global::System.Net.Http.HttpClient httpClient,
+            global::System.Net.Http.HttpResponseMessage httpResponseMessage,
+            ref string content);
+
         /// <summary>
         /// Search knowledge group<br/>
         /// Search for similar content in a knowledge group using vector similarity.
@@ -26,7 +31,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        public async global::System.Threading.Tasks.Task SearchKnowledgeGroupAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.SearchKnowledgeGroupResponse> SearchKnowledgeGroupAsync(
             string id,
 
             global::Anam.SearchKnowledgeGroupRequest request,
@@ -240,11 +245,18 @@ namespace Anam
                     client: HttpClient,
                     response: __response,
                     content: ref __content);
+                ProcessSearchKnowledgeGroupResponseContent(
+                    httpClient: HttpClient,
+                    httpResponseMessage: __response,
+                    content: ref __content);
 
                 try
                 {
                     __response.EnsureSuccessStatusCode();
 
+                    return
+                        global::Anam.SearchKnowledgeGroupResponse.FromJson(__content, JsonSerializerContext) ??
+                        throw new global::System.InvalidOperationException($"Response deserialization failed for \"{__content}\" ");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -266,6 +278,15 @@ namespace Anam
                 try
                 {
                     __response.EnsureSuccessStatusCode();
+                    using var __content = await __response.Content.ReadAsStreamAsync(
+#if NET5_0_OR_GREATER
+                        cancellationToken
+#endif
+                    ).ConfigureAwait(false);
+
+                    return
+                        await global::Anam.SearchKnowledgeGroupResponse.FromJsonStreamAsync(__content, JsonSerializerContext).ConfigureAwait(false) ??
+                        throw new global::System.InvalidOperationException("Response deserialization failed.");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -307,7 +328,7 @@ namespace Anam
         /// </param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        public async global::System.Threading.Tasks.Task SearchKnowledgeGroupAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.SearchKnowledgeGroupResponse> SearchKnowledgeGroupAsync(
             string id,
             string query,
             int? limit = default,
@@ -319,7 +340,7 @@ namespace Anam
                 Limit = limit,
             };
 
-            await SearchKnowledgeGroupAsync(
+            return await SearchKnowledgeGroupAsync(
                 id: id,
                 request: __request,
                 cancellationToken: cancellationToken).ConfigureAwait(false);

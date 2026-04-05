@@ -11,7 +11,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task CreateShareLinkAsync(
+        global::System.Threading.Tasks.Task<global::Anam.ShareLink> CreateShareLinkAsync(
 
             global::Anam.CreateShareLinkRequest request,
             global::System.Threading.CancellationToken cancellationToken = default);
@@ -28,7 +28,7 @@ namespace Anam
         /// </param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        global::System.Threading.Tasks.Task CreateShareLinkAsync(
+        global::System.Threading.Tasks.Task<global::Anam.ShareLink> CreateShareLinkAsync(
             global::System.Guid personaId,
             double? expiresInHours = default,
             double? usageLimit = default,

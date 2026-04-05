@@ -11,7 +11,7 @@ namespace Anam
         /// <param name="id"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task GetKnowledgeGroupAsync(
+        global::System.Threading.Tasks.Task<global::Anam.KnowledgeGroup> GetKnowledgeGroupAsync(
             string id,
             global::System.Threading.CancellationToken cancellationToken = default);
     }

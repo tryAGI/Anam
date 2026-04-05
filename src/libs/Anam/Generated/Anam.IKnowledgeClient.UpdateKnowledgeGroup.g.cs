@@ -12,7 +12,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task UpdateKnowledgeGroupAsync(
+        global::System.Threading.Tasks.Task<global::Anam.KnowledgeGroup> UpdateKnowledgeGroupAsync(
             string id,
 
             global::Anam.UpdateKnowledgeGroupRequest request,
@@ -26,7 +26,7 @@ namespace Anam
         /// <param name="description"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        global::System.Threading.Tasks.Task UpdateKnowledgeGroupAsync(
+        global::System.Threading.Tasks.Task<global::Anam.KnowledgeGroup> UpdateKnowledgeGroupAsync(
             string id,
             string? name = default,
             string? description = default,

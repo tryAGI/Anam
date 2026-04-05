@@ -12,7 +12,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task UpdateLlmAsync(
+        global::System.Threading.Tasks.Task<global::Anam.Llm> UpdateLlmAsync(
             string id,
 
             global::Anam.UpdateLlmRequest request,
@@ -33,7 +33,7 @@ namespace Anam
         /// <param name="reasoningFormat"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        global::System.Threading.Tasks.Task UpdateLlmAsync(
+        global::System.Threading.Tasks.Task<global::Anam.Llm> UpdateLlmAsync(
             string id,
             string? displayName = default,
             string? description = default,

@@ -19,6 +19,9 @@ namespace Anam
         /// Create persona<br/>
         /// Create a new persona with avatar, voice, LLM, and system prompt configuration.
         /// </summary>
+        /// <param name="id">
+        /// Unique identifier for the persona.
+        /// </param>
         /// <param name="name">
         /// Name of the persona.
         /// </param>
@@ -55,9 +58,12 @@ namespace Anam
         /// <param name="toolIds">
         /// Array of tool IDs to attach to the persona.
         /// </param>
+        /// <param name="createdAt"></param>
+        /// <param name="updatedAt"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.PersonaConfig> CreatePersonaAsync(
+            global::System.Guid? id = default,
             string? name = default,
             string? description = default,
             string? avatarId = default,
@@ -70,6 +76,8 @@ namespace Anam
             global::Anam.VoiceDetectionOptions? voiceDetectionOptions = default,
             string? languageCode = default,
             global::System.Collections.Generic.IList<string>? toolIds = default,
+            global::System.DateTime? createdAt = default,
+            global::System.DateTime? updatedAt = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }

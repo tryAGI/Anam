@@ -25,7 +25,7 @@ var client = new AnamClient(apiKey); // ANAM_API_KEY env var
 
 - `src/libs/Anam/openapi.yaml` -- OpenAPI 3.0.3 spec (manually authored)
 - `src/libs/Anam/generate.sh` -- Runs autosdk with `--security-scheme Http:Header:Bearer`
-- `src/libs/Anam/Generated/` -- **Never edit** -- auto-generated code (~250 files)
+- `src/libs/Anam/Generated/` -- **Never edit** -- auto-generated code (~282 files)
 - `src/libs/Anam/Extensions/AnamClient.Tools.cs` -- MEAI `AIFunction` tools
 - `src/tests/IntegrationTests/Tests.cs` -- Test helper with bearer auth
 - `src/tests/IntegrationTests/Examples/` -- Example tests (also generate docs)
@@ -40,7 +40,10 @@ client.Auth.CreateSessionTokenAsync(...)       // Create temporary session token
 
 // Avatars
 client.Avatars.ListAvatarsAsync(...)           // List avatars
+client.Avatars.GetAvatarAsync(...)             // Get avatar by ID
 client.Avatars.CreateAvatarAsync(...)          // Create custom avatar
+client.Avatars.UpdateAvatarAsync(...)          // Update avatar
+client.Avatars.DeleteAvatarAsync(...)          // Delete avatar
 
 // Voices
 client.Voices.ListVoicesAsync(...)             // List voices
@@ -64,6 +67,7 @@ client.Sessions.GetSessionRecordingAsync(...)  // Get recording URL
 
 // LLMs
 client.LLMs.ListLlmsAsync(...)                // List LLM configs
+client.LLMs.GetLlmAsync(...)                  // Get LLM config by ID
 client.LLMs.CreateLlmAsync(...)               // Create LLM config
 client.LLMs.UpdateLlmAsync(...)               // Update LLM config
 client.LLMs.DeleteLlmAsync(...)               // Delete LLM config
@@ -76,13 +80,24 @@ client.Tools.DeleteToolAsync(...)              // Delete tool
 
 // Knowledge (RAG)
 client.Knowledge.ListKnowledgeGroupsAsync(...) // List knowledge groups
+client.Knowledge.GetKnowledgeGroupAsync(...)   // Get group by ID
 client.Knowledge.CreateKnowledgeGroupAsync(...) // Create group
+client.Knowledge.UpdateKnowledgeGroupAsync(...) // Update group
+client.Knowledge.DeleteKnowledgeGroupAsync(...) // Delete group
 client.Knowledge.SearchKnowledgeGroupAsync(...) // Vector search
+client.Knowledge.ListKnowledgeGroupDocumentsAsync(...) // List documents
 client.Knowledge.UploadKnowledgeGroupDocumentAsync(...) // Upload document
+client.Knowledge.GetKnowledgeDocumentAsync(...)  // Get document by ID
+client.Knowledge.UpdateKnowledgeDocumentAsync(...) // Rename document
+client.Knowledge.DeleteKnowledgeDocumentAsync(...) // Delete document
+client.Knowledge.GetKnowledgeDocumentDownloadAsync(...) // Get download URL
 
 // Share Links
 client.ShareLinks.ListShareLinksAsync(...)     // List share links
+client.ShareLinks.GetShareLinkAsync(...)       // Get share link by ID
 client.ShareLinks.CreateShareLinkAsync(...)    // Create share link
+client.ShareLinks.UpdateShareLinkAsync(...)    // Update share link
+client.ShareLinks.DeleteShareLinkAsync(...)    // Delete share link
 ```
 
 ## MEAI Integration

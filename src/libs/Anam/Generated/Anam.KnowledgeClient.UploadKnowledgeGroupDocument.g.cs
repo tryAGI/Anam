@@ -18,6 +18,11 @@ namespace Anam
             global::System.Net.Http.HttpClient httpClient,
             global::System.Net.Http.HttpResponseMessage httpResponseMessage);
 
+        partial void ProcessUploadKnowledgeGroupDocumentResponseContent(
+            global::System.Net.Http.HttpClient httpClient,
+            global::System.Net.Http.HttpResponseMessage httpResponseMessage,
+            ref string content);
+
         /// <summary>
         /// Upload knowledge group document<br/>
         /// Upload a document to a knowledge group (PDF, TXT, MD, DOCX, CSV up to 50MB).
@@ -26,7 +31,7 @@ namespace Anam
         /// <param name="request"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        public async global::System.Threading.Tasks.Task UploadKnowledgeGroupDocumentAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
             string id,
 
             global::Anam.UploadKnowledgeGroupDocumentRequest request,
@@ -262,11 +267,18 @@ namespace Anam
                     client: HttpClient,
                     response: __response,
                     content: ref __content);
+                ProcessUploadKnowledgeGroupDocumentResponseContent(
+                    httpClient: HttpClient,
+                    httpResponseMessage: __response,
+                    content: ref __content);
 
                 try
                 {
                     __response.EnsureSuccessStatusCode();
 
+                    return
+                        global::Anam.KnowledgeDocument.FromJson(__content, JsonSerializerContext) ??
+                        throw new global::System.InvalidOperationException($"Response deserialization failed for \"{__content}\" ");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -288,6 +300,15 @@ namespace Anam
                 try
                 {
                     __response.EnsureSuccessStatusCode();
+                    using var __content = await __response.Content.ReadAsStreamAsync(
+#if NET5_0_OR_GREATER
+                        cancellationToken
+#endif
+                    ).ConfigureAwait(false);
+
+                    return
+                        await global::Anam.KnowledgeDocument.FromJsonStreamAsync(__content, JsonSerializerContext).ConfigureAwait(false) ??
+                        throw new global::System.InvalidOperationException("Response deserialization failed.");
                 }
                 catch (global::System.Exception __ex)
                 {
@@ -337,7 +358,7 @@ namespace Anam
         /// </param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
-        public async global::System.Threading.Tasks.Task UploadKnowledgeGroupDocumentAsync(
+        public async global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
             string id,
             byte[] file,
             string filename,
@@ -353,7 +374,7 @@ namespace Anam
                 ChunkOverlap = chunkOverlap,
             };
 
-            await UploadKnowledgeGroupDocumentAsync(
+            return await UploadKnowledgeGroupDocumentAsync(
                 id: id,
                 request: __request,
                 cancellationToken: cancellationToken).ConfigureAwait(false);

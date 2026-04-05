@@ -18,7 +18,7 @@ namespace Anam
         /// <param name="personaId"></param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
-        global::System.Threading.Tasks.Task ListShareLinksAsync(
+        global::System.Threading.Tasks.Task<global::Anam.ListShareLinksResponse> ListShareLinksAsync(
             int? page = default,
             int? perPage = default,
             string? search = default,

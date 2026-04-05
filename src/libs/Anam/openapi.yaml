@@ -267,6 +267,10 @@ components:
     PersonaConfig:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the persona.
         name:
           type: string
           description: Name of the persona.
@@ -308,6 +312,191 @@ components:
           items:
             type: string
           description: Array of tool IDs to attach to the persona.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    Session:
+      type: object
+      description: A session representing a conversation with an AI persona.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the session.
+        clientLabel:
+          type: string
+          nullable: true
+          description: Client-provided label for the session.
+        personaId:
+          type: string
+          format: uuid
+          nullable: true
+          description: ID of the persona used in the session.
+        personaName:
+          type: string
+          nullable: true
+          description: Name of the persona used in the session.
+        status:
+          type: string
+          description: Current status of the session.
+        startTime:
+          type: string
+          format: date-time
+          description: When the session started.
+        endTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the session ended.
+        durationMs:
+          type: integer
+          nullable: true
+          description: Duration of the session in milliseconds.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    ShareLink:
+      type: object
+      description: A shareable link for accessing a persona.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the share link.
+        personaId:
+          type: string
+          format: uuid
+          description: ID of the persona this link provides access to.
+        url:
+          type: string
+          description: The shareable URL.
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the share link expires.
+        usageLimit:
+          type: integer
+          nullable: true
+          description: Maximum number of times the link can be used.
+        usageCount:
+          type: integer
+          description: Number of times the link has been used.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    Llm:
+      type: object
+      description: An LLM configuration.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the LLM.
+        displayName:
+          type: string
+          description: Display name for the LLM.
+        description:
+          type: string
+          nullable: true
+          description: Description of the LLM.
+        llmFormat:
+          type: string
+          description: The format of the LLM API.
+        modelName:
+          type: string
+          description: The model name.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    KnowledgeGroup:
+      type: object
+      description: A knowledge group (RAG folder) containing documents for vector search.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the knowledge group.
+        name:
+          type: string
+          description: Name of the knowledge group.
+        description:
+          type: string
+          nullable: true
+          description: Description of the knowledge group.
+        documentCount:
+          type: integer
+          description: Number of documents in the group.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    KnowledgeDocument:
+      type: object
+      description: A document uploaded to a knowledge group.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the document.
+        filename:
+          type: string
+          description: Name of the document file.
+        status:
+          type: string
+          description: Processing status of the document.
+        fileSize:
+          type: integer
+          nullable: true
+          description: File size in bytes.
+        mimeType:
+          type: string
+          nullable: true
+          description: MIME type of the document.
+        chunkCount:
+          type: integer
+          nullable: true
+          description: Number of chunks the document was split into.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    SearchResult:
+      type: object
+      description: A search result from vector similarity search.
+      properties:
+        content:
+          type: string
+          description: The matched content chunk.
+        score:
+          type: number
+          description: Similarity score.
+        documentId:
+          type: string
+          description: ID of the source document.
+        metadata:
+          type: object
+          nullable: true
+          description: Additional metadata about the match.
 
 paths:
   /v1/auth/session-token:
@@ -694,6 +883,103 @@ paths:
         '500':
           description: Server error.
 
+  /v1/avatars/{id}:
+    get:
+      summary: Get avatar
+      description: Returns an avatar by ID.
+      operationId: getAvatar
+      tags:
+        - Avatars
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Avatar ID.
+      responses:
+        '200':
+          description: Successfully retrieved avatar.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Avatar'
+        '400':
+          description: Bad request - Invalid avatar ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Avatar not found.
+        '500':
+          description: Server error.
+    put:
+      summary: Update avatar
+      description: Update an avatar by ID (only display name can be updated).
+      operationId: updateAvatar
+      tags:
+        - Avatars
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Avatar ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - displayName
+              properties:
+                displayName:
+                  type: string
+                  description: New display name for the avatar.
+      responses:
+        '200':
+          description: Successfully updated avatar.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Avatar'
+        '400':
+          description: Bad request - Invalid avatar data.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Avatar not found.
+        '500':
+          description: Server error.
+    delete:
+      summary: Delete avatar
+      description: Delete an avatar by ID.
+      operationId: deleteAvatar
+      tags:
+        - Avatars
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Avatar ID.
+      responses:
+        '200':
+          description: Successfully deleted avatar.
+        '400':
+          description: Bad request - Invalid avatar ID.
+        '401':
+          description: Unauthorized - Invalid or missing API key.
+        '404':
+          description: Not Found - Avatar not found.
+        '500':
+          description: Server error.
+
   /v1/personas:
     get:
       summary: List personas
@@ -977,6 +1263,10 @@ paths:
       responses:
         '201':
           description: Successfully created LLM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Llm'
         '400':
           description: Bad request - Invalid LLM data.
         '401':
@@ -1001,6 +1291,10 @@ paths:
       responses:
         '200':
           description: Successfully retrieved LLM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Llm'
         '401':
           description: Unauthorized - Invalid or missing API key.
         '404':
@@ -1063,6 +1357,10 @@ paths:
       responses:
         '200':
           description: Successfully updated LLM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Llm'
         '400':
           description: Bad request - Invalid LLM data.
         '401':
@@ -1343,6 +1641,17 @@ paths:
       responses:
         '200':
           description: Successfully retrieved sessions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Session'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
         '400':
           description: Bad request - Invalid query parameters.
         '401':
@@ -1368,6 +1677,10 @@ paths:
       responses:
         '200':
           description: Successfully retrieved session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
         '400':
           description: Bad request - Invalid session ID.
         '401':
@@ -1480,6 +1793,17 @@ paths:
       responses:
         '200':
           description: Successfully retrieved share links.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ShareLink'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
         '400':
           description: Bad request - Invalid query parameters.
         '401':
@@ -1513,6 +1837,10 @@ paths:
       responses:
         '201':
           description: Successfully created share link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLink'
         '400':
           description: Bad request - Invalid share link data.
         '401':
@@ -1540,6 +1868,10 @@ paths:
       responses:
         '200':
           description: Successfully retrieved share link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLink'
         '400':
           description: Bad request - Invalid share link ID.
         '401':
@@ -1576,6 +1908,10 @@ paths:
       responses:
         '200':
           description: Successfully updated share link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLink'
         '400':
           description: Bad request - Invalid share link data.
         '401':
@@ -1620,6 +1956,15 @@ paths:
       responses:
         '200':
           description: Successfully retrieved knowledge groups.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/KnowledgeGroup'
         '401':
           description: Unauthorized - Invalid or missing API key.
         '500':
@@ -1646,6 +1991,10 @@ paths:
       responses:
         '201':
           description: Successfully created knowledge group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeGroup'
         '400':
           description: Bad request - Invalid data.
         '401':
@@ -1669,6 +2018,10 @@ paths:
       responses:
         '200':
           description: Successfully retrieved knowledge group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeGroup'
         '401':
           description: Unauthorized - Invalid or missing API key.
         '404':
@@ -1701,6 +2054,10 @@ paths:
       responses:
         '200':
           description: Successfully updated knowledge group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeGroup'
         '400':
           description: Bad request - Invalid data.
         '401':
@@ -1763,6 +2120,15 @@ paths:
       responses:
         '200':
           description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResult'
         '400':
           description: Bad request - Invalid search query.
         '401':
@@ -1788,6 +2154,15 @@ paths:
       responses:
         '200':
           description: Successfully retrieved documents.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/KnowledgeDocument'
         '401':
           description: Unauthorized - Invalid or missing API key.
         '404':
@@ -1828,6 +2203,10 @@ paths:
       responses:
         '201':
           description: Successfully uploaded document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeDocument'
         '400':
           description: Bad request - Invalid file or parameters.
         '401':
@@ -1853,6 +2232,10 @@ paths:
       responses:
         '200':
           description: Successfully retrieved document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeDocument'
         '401':
           description: Unauthorized - Invalid or missing API key.
         '404':
@@ -1884,6 +2267,10 @@ paths:
       responses:
         '200':
           description: Successfully updated document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeDocument'
         '400':
           description: Bad request - Invalid data.
         '401':
