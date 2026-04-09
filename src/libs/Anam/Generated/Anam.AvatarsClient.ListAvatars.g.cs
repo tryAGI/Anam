@@ -5,6 +5,25 @@ namespace Anam
 {
     public partial class AvatarsClient
     {
+
+
+        private static readonly global::Anam.EndPointSecurityRequirement s_ListAvatarsSecurityRequirement0 =
+            new global::Anam.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Anam.EndPointAuthorizationRequirement[]
+                {                    new global::Anam.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Anam.EndPointSecurityRequirement[] s_ListAvatarsSecurityRequirements =
+            new global::Anam.EndPointSecurityRequirement[]
+            {                s_ListAvatarsSecurityRequirement0,
+            };
         partial void PrepareListAvatarsArguments(
             global::System.Net.Http.HttpClient httpClient,
             ref int? page,
@@ -59,6 +78,12 @@ namespace Anam
                 search: ref search,
                 onlyOneShot: ref onlyOneShot);
 
+
+            var __authorizations = global::Anam.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_ListAvatarsSecurityRequirements,
+                operationName: "ListAvatarsAsync");
+
             var __pathBuilder = new global::Anam.PathBuilder(
                 path: "/v1/avatars",
                 baseUri: HttpClient.BaseAddress); 
@@ -67,7 +92,7 @@ namespace Anam
                 .AddOptionalParameter("perPage", perPage?.ToString())
                 .AddOptionalParameter("search", search)
                 .AddOptionalParameter("onlyOneShot", onlyOneShot?.ToString().ToLowerInvariant()) 
-                ; 
+                ;
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Get,
@@ -77,7 +102,7 @@ namespace Anam
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")

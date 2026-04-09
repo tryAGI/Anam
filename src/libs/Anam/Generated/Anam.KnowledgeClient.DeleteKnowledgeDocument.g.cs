@@ -5,6 +5,25 @@ namespace Anam
 {
     public partial class KnowledgeClient
     {
+
+
+        private static readonly global::Anam.EndPointSecurityRequirement s_DeleteKnowledgeDocumentSecurityRequirement0 =
+            new global::Anam.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Anam.EndPointAuthorizationRequirement[]
+                {                    new global::Anam.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Anam.EndPointSecurityRequirement[] s_DeleteKnowledgeDocumentSecurityRequirements =
+            new global::Anam.EndPointSecurityRequirement[]
+            {                s_DeleteKnowledgeDocumentSecurityRequirement0,
+            };
         partial void PrepareDeleteKnowledgeDocumentArguments(
             global::System.Net.Http.HttpClient httpClient,
             ref string id);
@@ -33,9 +52,15 @@ namespace Anam
                 httpClient: HttpClient,
                 id: ref id);
 
+
+            var __authorizations = global::Anam.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_DeleteKnowledgeDocumentSecurityRequirements,
+                operationName: "DeleteKnowledgeDocumentAsync");
+
             var __pathBuilder = new global::Anam.PathBuilder(
                 path: $"/v1/knowledge/documents/{id}",
-                baseUri: HttpClient.BaseAddress); 
+                baseUri: HttpClient.BaseAddress);
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Delete,
@@ -45,7 +70,7 @@ namespace Anam
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")

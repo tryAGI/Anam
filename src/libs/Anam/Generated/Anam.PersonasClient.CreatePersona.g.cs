@@ -5,6 +5,25 @@ namespace Anam
 {
     public partial class PersonasClient
     {
+
+
+        private static readonly global::Anam.EndPointSecurityRequirement s_CreatePersonaSecurityRequirement0 =
+            new global::Anam.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Anam.EndPointAuthorizationRequirement[]
+                {                    new global::Anam.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Anam.EndPointSecurityRequirement[] s_CreatePersonaSecurityRequirements =
+            new global::Anam.EndPointSecurityRequirement[]
+            {                s_CreatePersonaSecurityRequirement0,
+            };
         partial void PrepareCreatePersonaArguments(
             global::System.Net.Http.HttpClient httpClient,
             global::Anam.PersonaConfig request);
@@ -41,9 +60,15 @@ namespace Anam
                 httpClient: HttpClient,
                 request: request);
 
+
+            var __authorizations = global::Anam.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_CreatePersonaSecurityRequirements,
+                operationName: "CreatePersonaAsync");
+
             var __pathBuilder = new global::Anam.PathBuilder(
                 path: "/v1/personas",
-                baseUri: HttpClient.BaseAddress); 
+                baseUri: HttpClient.BaseAddress);
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Post,
@@ -53,7 +78,7 @@ namespace Anam
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")
