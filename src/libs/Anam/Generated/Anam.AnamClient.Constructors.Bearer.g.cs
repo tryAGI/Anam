@@ -6,6 +6,7 @@ namespace Anam
     public sealed partial class AnamClient
     {
         /// <inheritdoc cref="AnamClient(global::System.Net.Http.HttpClient?, global::System.Uri?, global::System.Collections.Generic.List{global::Anam.EndPointAuthorization}?, bool)"/>
+
         public AnamClient(
             string apiKey,
             global::System.Net.Http.HttpClient? httpClient = null,

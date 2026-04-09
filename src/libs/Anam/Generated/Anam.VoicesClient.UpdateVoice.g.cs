@@ -5,6 +5,25 @@ namespace Anam
 {
     public partial class VoicesClient
     {
+
+
+        private static readonly global::Anam.EndPointSecurityRequirement s_UpdateVoiceSecurityRequirement0 =
+            new global::Anam.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Anam.EndPointAuthorizationRequirement[]
+                {                    new global::Anam.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Anam.EndPointSecurityRequirement[] s_UpdateVoiceSecurityRequirements =
+            new global::Anam.EndPointSecurityRequirement[]
+            {                s_UpdateVoiceSecurityRequirement0,
+            };
         partial void PrepareUpdateVoiceArguments(
             global::System.Net.Http.HttpClient httpClient,
             ref global::System.Guid id,
@@ -46,9 +65,15 @@ namespace Anam
                 id: ref id,
                 request: request);
 
+
+            var __authorizations = global::Anam.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_UpdateVoiceSecurityRequirements,
+                operationName: "UpdateVoiceAsync");
+
             var __pathBuilder = new global::Anam.PathBuilder(
                 path: $"/v1/voices/{id}",
-                baseUri: HttpClient.BaseAddress); 
+                baseUri: HttpClient.BaseAddress);
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Put,
@@ -58,7 +83,7 @@ namespace Anam
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")

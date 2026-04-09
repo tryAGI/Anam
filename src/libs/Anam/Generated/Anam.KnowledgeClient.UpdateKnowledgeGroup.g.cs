@@ -5,6 +5,25 @@ namespace Anam
 {
     public partial class KnowledgeClient
     {
+
+
+        private static readonly global::Anam.EndPointSecurityRequirement s_UpdateKnowledgeGroupSecurityRequirement0 =
+            new global::Anam.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Anam.EndPointAuthorizationRequirement[]
+                {                    new global::Anam.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Anam.EndPointSecurityRequirement[] s_UpdateKnowledgeGroupSecurityRequirements =
+            new global::Anam.EndPointSecurityRequirement[]
+            {                s_UpdateKnowledgeGroupSecurityRequirement0,
+            };
         partial void PrepareUpdateKnowledgeGroupArguments(
             global::System.Net.Http.HttpClient httpClient,
             ref string id,
@@ -46,9 +65,15 @@ namespace Anam
                 id: ref id,
                 request: request);
 
+
+            var __authorizations = global::Anam.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_UpdateKnowledgeGroupSecurityRequirements,
+                operationName: "UpdateKnowledgeGroupAsync");
+
             var __pathBuilder = new global::Anam.PathBuilder(
                 path: $"/v1/knowledge/groups/{id}",
-                baseUri: HttpClient.BaseAddress); 
+                baseUri: HttpClient.BaseAddress);
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Put,
@@ -58,7 +83,7 @@ namespace Anam
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")

@@ -12,7 +12,7 @@ namespace Anam
         /// <summary>
         /// Anam API
         /// </summary>
-        public const string DefaultBaseUrl = "https://api.anam.ai";
+        public const string DefaultBaseUrl = "https://api.anam.ai/";
 
         private bool _disposeHttpClient = true;
 
