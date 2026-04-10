@@ -10,12 +10,14 @@ namespace Anam
         /// </summary>
         /// <param name="id"></param>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UpdateKnowledgeDocumentAsync(
             string id,
 
             global::Anam.UpdateKnowledgeDocumentRequest request,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update knowledge document<br/>
@@ -25,11 +27,13 @@ namespace Anam
         /// <param name="filename">
         /// New filename for the document.
         /// </param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UpdateKnowledgeDocumentAsync(
             string id,
             string? filename = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }

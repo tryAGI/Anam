@@ -9,11 +9,13 @@ namespace Anam
         /// Create a new LLM configuration.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Llm> CreateLlmAsync(
 
             global::Anam.CreateLlmRequest request,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create LLM<br/>
@@ -28,6 +30,7 @@ namespace Anam
         /// <param name="metadata"></param>
         /// <param name="reasoningEffort"></param>
         /// <param name="reasoningFormat"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Llm> CreateLlmAsync(
@@ -40,6 +43,7 @@ namespace Anam
             object? metadata = default,
             global::Anam.CreateLlmRequestReasoningEffort? reasoningEffort = default,
             global::Anam.CreateLlmRequestReasoningFormat? reasoningFormat = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }

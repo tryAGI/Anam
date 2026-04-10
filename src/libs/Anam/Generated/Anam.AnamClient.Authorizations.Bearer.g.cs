@@ -25,6 +25,7 @@ namespace Anam
             Authorizations.Add(new global::Anam.EndPointAuthorization
             {
                 Type = "Http",
+                SchemeId = "HttpBearer",
                 Location = "Header",
                 Name = "Bearer",
                 Value = apiKey,

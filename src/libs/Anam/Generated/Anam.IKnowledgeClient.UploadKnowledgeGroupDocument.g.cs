@@ -10,12 +10,14 @@ namespace Anam
         /// </summary>
         /// <param name="id"></param>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
             string id,
 
             global::Anam.UploadKnowledgeGroupDocumentRequest request,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Upload knowledge group document<br/>
@@ -34,6 +36,7 @@ namespace Anam
         /// <param name="chunkOverlap">
         /// Default Value: 200
         /// </param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.KnowledgeDocument> UploadKnowledgeGroupDocumentAsync(
@@ -42,6 +45,7 @@ namespace Anam
             string filename,
             int? chunkSize = default,
             int? chunkOverlap = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }
