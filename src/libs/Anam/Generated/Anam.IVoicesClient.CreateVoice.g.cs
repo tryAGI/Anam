@@ -9,11 +9,13 @@ namespace Anam
         /// Create a new voice by cloning from an audio file.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Voice> CreateVoiceAsync(
 
             global::Anam.CreateVoiceRequest request,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create voice<br/>
@@ -39,6 +41,7 @@ namespace Anam
         /// Whether to enhance the voice quality.<br/>
         /// Default Value: true
         /// </param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Voice> CreateVoiceAsync(
@@ -48,6 +51,7 @@ namespace Anam
             string? description = default,
             string? language = default,
             bool? enhance = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }

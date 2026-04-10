@@ -12,6 +12,7 @@ namespace Anam
         /// <param name="perPage"></param>
         /// <param name="search"></param>
         /// <param name="includeDefaults"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.ListLlmsResponse> ListLlmsAsync(
@@ -19,6 +20,7 @@ namespace Anam
             int? perPage = default,
             string? search = default,
             bool? includeDefaults = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }

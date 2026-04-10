@@ -9,11 +9,13 @@ namespace Anam
         /// Create a new custom avatar from an image.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Anam.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Avatar> CreateAvatarAsync(
 
             global::Anam.CreateAvatarRequest request,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create avatar<br/>
@@ -31,6 +33,7 @@ namespace Anam
         /// <param name="imageUrl">
         /// Image URL (JPEG, PNG, WebP; max 4.5MB).
         /// </param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Anam.Avatar> CreateAvatarAsync(
@@ -38,6 +41,7 @@ namespace Anam
             byte[]? imageFile = default,
             string? imageFilename = default,
             string? imageUrl = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }
