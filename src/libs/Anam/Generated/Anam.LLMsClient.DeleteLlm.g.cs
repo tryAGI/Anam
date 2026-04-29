@@ -120,7 +120,7 @@ namespace Anam
                 PrepareDeleteLlmRequest(
                     httpClient: HttpClient,
                     httpRequestMessage: __httpRequest,
-                    id: id);
+                    id: id!);
 
                 return __httpRequest;
             }
