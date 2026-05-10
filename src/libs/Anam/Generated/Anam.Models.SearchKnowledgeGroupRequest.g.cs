@@ -51,5 +51,6 @@ namespace Anam
         public SearchKnowledgeGroupRequest()
         {
         }
+
     }
 }

@@ -42,5 +42,6 @@ namespace Anam
         public UpdateAvatarRequest()
         {
         }
+
     }
 }
