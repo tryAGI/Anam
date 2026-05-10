@@ -64,5 +64,6 @@ namespace Anam
         public CartesiaSonic3VoiceGenerationOptions()
         {
         }
+
     }
 }

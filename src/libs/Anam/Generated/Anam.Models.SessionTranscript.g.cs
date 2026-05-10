@@ -102,5 +102,6 @@ namespace Anam
         public SessionTranscript()
         {
         }
+
     }
 }

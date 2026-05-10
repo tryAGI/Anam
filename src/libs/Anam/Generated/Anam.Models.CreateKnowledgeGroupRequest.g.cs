@@ -49,5 +49,6 @@ namespace Anam
         public CreateKnowledgeGroupRequest()
         {
         }
+
     }
 }

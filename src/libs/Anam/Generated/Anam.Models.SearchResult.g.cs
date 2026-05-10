@@ -74,5 +74,6 @@ namespace Anam
         public SearchResult()
         {
         }
+
     }
 }

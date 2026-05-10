@@ -39,5 +39,6 @@ namespace Anam
         public SearchKnowledgeGroupResponse()
         {
         }
+
     }
 }

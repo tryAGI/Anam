@@ -78,5 +78,6 @@ namespace Anam
         public TranscriptMessage()
         {
         }
+
     }
 }

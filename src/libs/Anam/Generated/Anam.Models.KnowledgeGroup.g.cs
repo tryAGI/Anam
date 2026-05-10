@@ -92,5 +92,6 @@ namespace Anam
         public KnowledgeGroup()
         {
         }
+
     }
 }
