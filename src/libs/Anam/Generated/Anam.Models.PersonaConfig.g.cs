@@ -192,5 +192,6 @@ namespace Anam
         public PersonaConfig()
         {
         }
+
     }
 }

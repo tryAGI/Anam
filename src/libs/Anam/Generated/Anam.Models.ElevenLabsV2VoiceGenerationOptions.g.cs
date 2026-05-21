@@ -96,5 +96,6 @@ namespace Anam
         public ElevenLabsV2VoiceGenerationOptions()
         {
         }
+
     }
 }

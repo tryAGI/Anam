@@ -84,5 +84,6 @@ namespace Anam
         public Avatar()
         {
         }
+
     }
 }

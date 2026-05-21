@@ -22,5 +22,23 @@ namespace Anam
             bool? includeDefaults = default,
             global::Anam.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// List LLMs<br/>
+        /// Returns a list of all LLMs available to the organization.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <param name="search"></param>
+        /// <param name="includeDefaults"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
+        /// <param name="cancellationToken">The token to cancel the operation with</param>
+        /// <exception cref="global::Anam.ApiException"></exception>
+        global::System.Threading.Tasks.Task<global::Anam.AutoSDKHttpResponse<global::Anam.ListLlmsResponse>> ListLlmsAsResponseAsync(
+            int? page = default,
+            int? perPage = default,
+            string? search = default,
+            bool? includeDefaults = default,
+            global::Anam.AutoSDKRequestOptions? requestOptions = default,
+            global::System.Threading.CancellationToken cancellationToken = default);
     }
 }
