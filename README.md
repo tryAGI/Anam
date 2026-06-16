@@ -40,6 +40,13 @@ using Anam;
 using var client = new AnamClient(apiKey);
 ```
 
+### CLI
+
+```bash
+dotnet tool install --global Anam.CLI --prerelease
+anam api --help
+```
+
 <!-- EXAMPLES:START -->
 <!-- EXAMPLES:END -->
 
