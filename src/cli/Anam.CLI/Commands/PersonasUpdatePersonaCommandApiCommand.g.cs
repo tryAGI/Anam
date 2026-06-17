@@ -12,12 +12,6 @@ internal static partial class PersonasUpdatePersonaCommandApiCommand
     {
         Description = @"Persona ID.",
     };
-
-    private static Option<global::System.Guid?> RequestId { get; } = new(
-        name: @"--id")
-    {
-        Description = @"Unique identifier for the persona.",
-    };
     private static readonly PersonaConfigOptionSet PersonaConfigOptionSetOptions = PersonaConfigOptionSet.Create();
 
     private static readonly VoiceDetectionOptionsOptionSet VoiceDetectionOptionsOptions = VoiceDetectionOptionsOptionSet.Create(@"voice-detection");
@@ -62,8 +56,8 @@ internal static partial class PersonasUpdatePersonaCommandApiCommand
     {
         var command = new Command(@"update-persona", @"Update persona
 Update a persona by ID.");
-                        command.Arguments.Add(Id);
-                        command.Options.Add(RequestId);                        command.Options.Add(PersonaConfigOptionSetOptions.NameOption);
+                        command.Arguments.Add(Id);                        command.Options.Add(PersonaConfigOptionSetOptions.Id);
+                        command.Options.Add(PersonaConfigOptionSetOptions.NameOption);
                         command.Options.Add(PersonaConfigOptionSetOptions.DescriptionOption);
                         command.Options.Add(PersonaConfigOptionSetOptions.AvatarId);
                         command.Options.Add(PersonaConfigOptionSetOptions.AvatarModel);
@@ -105,8 +99,8 @@ Update a persona by ID.");
                             RequestFile,
                             global::Anam.SourceGenerationContext.Default,
                             cancellationToken).ConfigureAwait(false);
-                        var id = parseResult.GetRequiredValue(Id);
-                        var requestId = CliRuntime.WasSpecified(parseResult, RequestId) ? parseResult.GetValue(RequestId) : (__requestBase is { } __RequestIdBaseValue ? __RequestIdBaseValue.Id : default);                        var name = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.NameOption) ? parseResult.GetValue(PersonaConfigOptionSetOptions.NameOption) : (__requestBase is { } __NameBaseValue ? __NameBaseValue.Name : default);
+                        var id = parseResult.GetRequiredValue(Id);                        var requestId = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.Id) ? parseResult.GetValue(PersonaConfigOptionSetOptions.Id) : (__requestBase is { } __RequestIdBaseValue ? __RequestIdBaseValue.Id : default);
+                        var name = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.NameOption) ? parseResult.GetValue(PersonaConfigOptionSetOptions.NameOption) : (__requestBase is { } __NameBaseValue ? __NameBaseValue.Name : default);
                         var description = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.DescriptionOption) ? parseResult.GetValue(PersonaConfigOptionSetOptions.DescriptionOption) : (__requestBase is { } __DescriptionBaseValue ? __DescriptionBaseValue.Description : default);
                         var avatarId = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.AvatarId) ? parseResult.GetValue(PersonaConfigOptionSetOptions.AvatarId) : (__requestBase is { } __AvatarIdBaseValue ? __AvatarIdBaseValue.AvatarId : default);
                         var avatarModel = CliRuntime.WasSpecified(parseResult, PersonaConfigOptionSetOptions.AvatarModel) ? parseResult.GetValue(PersonaConfigOptionSetOptions.AvatarModel) : (__requestBase is { } __AvatarModelBaseValue ? __AvatarModelBaseValue.AvatarModel : default);
