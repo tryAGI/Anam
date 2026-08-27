@@ -4,7 +4,7 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class UpdateVoiceRequest
     {
@@ -22,7 +22,7 @@ namespace Anam
         public string? ProviderModelId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("gender")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.UpdateVoiceRequestGenderJsonConverter))]
@@ -35,7 +35,7 @@ namespace Anam
         public string? Country { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; }

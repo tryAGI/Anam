@@ -20,7 +20,7 @@ namespace Anam.JsonConverters
                     {
                         return global::Anam.UpdateLlmRequestReasoningEffortExtensions.ToEnum(stringValue);
                     }
-                    
+
                     break;
                 }
                 case global::System.Text.Json.JsonTokenType.Number:

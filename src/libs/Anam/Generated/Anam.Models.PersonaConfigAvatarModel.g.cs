@@ -9,15 +9,15 @@ namespace Anam
     public enum PersonaConfigAvatarModel
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara2,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara3,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara4Latest,
     }

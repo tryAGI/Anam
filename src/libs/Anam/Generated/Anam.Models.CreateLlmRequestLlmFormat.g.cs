@@ -4,32 +4,32 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum CreateLlmRequestLlmFormat
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         AdvancedVoice,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         AzureOpenai,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Gemini,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         GroqOpenai,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Openai,
     }

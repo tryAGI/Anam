@@ -9,50 +9,50 @@ namespace Anam
     public sealed partial class CreateSessionTokenRequestPersonaConfig
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("avatarId")]
         public string? AvatarId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("avatarModel")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.CreateSessionTokenRequestPersonaConfigAvatarModelJsonConverter))]
         public global::Anam.CreateSessionTokenRequestPersonaConfigAvatarModel? AvatarModel { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("voiceId")]
         public string? VoiceId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("llmId")]
         public string? LlmId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("systemPrompt")]
         public string? SystemPrompt { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("maxSessionLengthSeconds")]
         public double? MaxSessionLengthSeconds { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("skipGreeting")]
         public bool? SkipGreeting { get; set; }
@@ -70,7 +70,7 @@ namespace Anam
         public global::Anam.VoiceDetectionOptions? VoiceDetectionOptions { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("languageCode")]
         public string? LanguageCode { get; set; }

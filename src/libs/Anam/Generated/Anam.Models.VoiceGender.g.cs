@@ -4,20 +4,20 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum VoiceGender
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Female,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Male,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Neutral,
     }

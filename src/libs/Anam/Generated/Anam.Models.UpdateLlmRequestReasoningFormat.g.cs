@@ -4,20 +4,20 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum UpdateLlmRequestReasoningFormat
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Hidden,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Parsed,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Raw,
     }

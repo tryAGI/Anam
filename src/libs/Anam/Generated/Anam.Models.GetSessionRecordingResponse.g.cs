@@ -4,7 +4,7 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class GetSessionRecordingResponse
     {

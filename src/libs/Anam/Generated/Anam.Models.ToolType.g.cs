@@ -9,19 +9,19 @@ namespace Anam
     public enum ToolType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Client,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerRag,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerWebhook,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         System,
     }

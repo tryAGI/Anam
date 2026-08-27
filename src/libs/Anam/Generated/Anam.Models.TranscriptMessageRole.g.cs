@@ -4,16 +4,16 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum TranscriptMessageRole
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Persona,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         User,
     }

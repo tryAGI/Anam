@@ -4,20 +4,20 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum CreateSessionTokenRequestPersonaConfigAvatarModel
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara2,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara3,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Cara4Latest,
     }

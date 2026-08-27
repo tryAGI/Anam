@@ -9,19 +9,19 @@ namespace Anam
     public enum CreateToolRequestType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Client,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerRag,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerWebhook,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         System,
     }

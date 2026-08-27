@@ -4,12 +4,12 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class CreateShareLinkRequest
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("personaId")]
         [global::System.Text.Json.Serialization.JsonRequired]
