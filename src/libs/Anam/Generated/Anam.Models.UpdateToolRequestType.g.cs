@@ -4,24 +4,24 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum UpdateToolRequestType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Client,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerRag,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ServerWebhook,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         System,
     }

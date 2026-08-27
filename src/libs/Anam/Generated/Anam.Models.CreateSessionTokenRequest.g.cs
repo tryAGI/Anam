@@ -4,7 +4,7 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class CreateSessionTokenRequest
     {
@@ -21,7 +21,7 @@ namespace Anam
         public global::Anam.CreateSessionTokenRequestPersonaConfig? PersonaConfig { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("sessionOptions")]
         public global::Anam.CreateSessionTokenRequestSessionOptions? SessionOptions { get; set; }

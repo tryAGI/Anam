@@ -4,18 +4,18 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class ListSessionsResponse
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("data")]
         public global::System.Collections.Generic.IList<global::Anam.Session>? Data { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("meta")]
         public global::Anam.PaginationMeta? Meta { get; set; }

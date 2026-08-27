@@ -4,19 +4,19 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class CreateKnowledgeGroupRequest
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("name")]
         [global::System.Text.Json.Serialization.JsonRequired]
         public required string Name { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; }

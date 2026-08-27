@@ -172,7 +172,7 @@ namespace Anam
                          __authorization.Location == "Header")
                 {
                     __httpRequest.Headers.Add(__authorization.Name, __authorization.Value);
-                } 
+                }
             }
                 global::Anam.AutoSDKRequestOptionsSupport.ApplyHeaders(
                     request: __httpRequest,
@@ -367,7 +367,7 @@ namespace Anam
                                 retryReason: global::System.String.Empty,
                                 cancellationToken: __effectiveCancellationToken)).ConfigureAwait(false);
                 }
-                            // 
+                            //
                             if ((int)__response.StatusCode == 400)
                             {
                                 string? __content_400 = null;
@@ -399,7 +399,7 @@ namespace Anam
                                         h => h.Key,
                                         h => h.Value));
                             }
-                            // 
+                            //
                             if ((int)__response.StatusCode == 401)
                             {
                                 string? __content_401 = null;
@@ -431,7 +431,7 @@ namespace Anam
                                         h => h.Key,
                                         h => h.Value));
                             }
-                            // 
+                            //
                             if ((int)__response.StatusCode == 500)
                             {
                                 string? __content_500 = null;

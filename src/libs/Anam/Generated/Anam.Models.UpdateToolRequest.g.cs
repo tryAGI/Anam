@@ -4,7 +4,7 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class UpdateToolRequest
     {
@@ -21,7 +21,7 @@ namespace Anam
         public string? Description { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("type")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.UpdateToolRequestTypeJsonConverter))]

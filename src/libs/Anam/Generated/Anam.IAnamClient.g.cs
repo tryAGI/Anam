@@ -40,53 +40,53 @@ namespace Anam
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         global::System.Text.Json.Serialization.JsonSerializerContext JsonSerializerContext { get; set; }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public AuthClient Auth { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public AvatarsClient Avatars { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public KnowledgeClient Knowledge { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public LLMsClient LLMs { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public PersonasClient Personas { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SessionsClient Sessions { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public ShareLinksClient ShareLinks { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public ToolsClient Tools { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public VoicesClient Voices { get; }
 

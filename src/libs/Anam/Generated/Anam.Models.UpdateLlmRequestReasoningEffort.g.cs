@@ -4,24 +4,24 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum UpdateLlmRequestReasoningEffort
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Default,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         High,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Low,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Medium,
     }

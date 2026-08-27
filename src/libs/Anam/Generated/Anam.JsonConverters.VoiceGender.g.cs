@@ -20,7 +20,7 @@ namespace Anam.JsonConverters
                     {
                         return global::Anam.VoiceGenderExtensions.ToEnum(stringValue) ?? default;
                     }
-                    
+
                     break;
                 }
                 case global::System.Text.Json.JsonTokenType.Number:

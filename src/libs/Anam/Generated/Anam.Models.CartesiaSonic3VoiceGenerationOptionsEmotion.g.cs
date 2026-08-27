@@ -9,27 +9,27 @@ namespace Anam
     public enum CartesiaSonic3VoiceGenerationOptionsEmotion
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Angry,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Calm,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Content,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Neutral,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Sad,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Scared,
     }

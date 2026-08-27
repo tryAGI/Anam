@@ -4,62 +4,62 @@
 namespace Anam
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class UpdateLlmRequest
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("displayName")]
         public string? DisplayName { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("url")]
         public string? Url { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("llmFormat")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.UpdateLlmRequestLlmFormatJsonConverter))]
         public global::Anam.UpdateLlmRequestLlmFormat? LlmFormat { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("modelName")]
         public string? ModelName { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("secret")]
         public string? Secret { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("metadata")]
         public object? Metadata { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("reasoningEffort")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.UpdateLlmRequestReasoningEffortJsonConverter))]
         public global::Anam.UpdateLlmRequestReasoningEffort? ReasoningEffort { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("reasoningFormat")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Anam.JsonConverters.UpdateLlmRequestReasoningFormatJsonConverter))]

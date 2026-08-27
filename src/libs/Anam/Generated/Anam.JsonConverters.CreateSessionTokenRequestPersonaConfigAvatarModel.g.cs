@@ -20,7 +20,7 @@ namespace Anam.JsonConverters
                     {
                         return global::Anam.CreateSessionTokenRequestPersonaConfigAvatarModelExtensions.ToEnum(stringValue) ?? default;
                     }
-                    
+
                     break;
                 }
                 case global::System.Text.Json.JsonTokenType.Number:
