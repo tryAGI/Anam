@@ -13,6 +13,8 @@ internal static partial class ShareLinksDeleteShareLinkCommandApiCommand
         Description = @"Share link ID.",
     };
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"delete-share-link", @"Delete share link
@@ -33,6 +35,7 @@ Delete a share link by ID.");
 
                                 await CliRuntime.WriteSuccessAsync(parseResult, cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

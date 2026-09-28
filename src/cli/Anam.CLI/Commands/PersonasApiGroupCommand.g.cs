@@ -4,8 +4,10 @@ using System.CommandLine;
 
 namespace Anam.CLI.Commands;
 
-internal static class PersonasApiGroupCommand
+internal static partial class PersonasApiGroupCommand
 {
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"personas", @"Personas endpoint commands.");
@@ -14,6 +16,7 @@ internal static class PersonasApiGroupCommand
                          command.Subcommands.Add(PersonasGetPersonaCommandApiCommand.Create());
                          command.Subcommands.Add(PersonasListPersonasCommandApiCommand.Create());
                          command.Subcommands.Add(PersonasUpdatePersonaCommandApiCommand.Create());
+        CustomizeCommand(ref command);
         return command;
     }
 }

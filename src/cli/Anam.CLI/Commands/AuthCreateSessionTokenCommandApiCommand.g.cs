@@ -61,6 +61,8 @@ internal static partial class AuthCreateSessionTokenCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"create-session-token", @"Create session token
@@ -113,6 +115,7 @@ Creates a temporary session token for client-side use. The session token is vali
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }
