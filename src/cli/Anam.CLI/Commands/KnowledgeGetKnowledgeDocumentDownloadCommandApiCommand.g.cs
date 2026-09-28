@@ -33,6 +33,8 @@ internal static partial class KnowledgeGetKnowledgeDocumentDownloadCommandApiCom
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"get-knowledge-document-download", @"Get knowledge document download
@@ -59,6 +61,7 @@ Get a presigned download URL for a knowledge document.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

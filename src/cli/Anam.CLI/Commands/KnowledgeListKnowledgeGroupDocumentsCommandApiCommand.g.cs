@@ -33,6 +33,8 @@ internal static partial class KnowledgeListKnowledgeGroupDocumentsCommandApiComm
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"list-knowledge-group-documents", @"List knowledge group documents
@@ -67,6 +69,7 @@ Get all documents in a knowledge group.");
                                     cancellationToken).ConfigureAwait(false);
                                 }
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

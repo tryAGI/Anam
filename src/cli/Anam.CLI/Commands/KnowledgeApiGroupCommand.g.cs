@@ -4,8 +4,10 @@ using System.CommandLine;
 
 namespace Anam.CLI.Commands;
 
-internal static class KnowledgeApiGroupCommand
+internal static partial class KnowledgeApiGroupCommand
 {
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"knowledge", @"Knowledge endpoint commands.");
@@ -21,6 +23,7 @@ internal static class KnowledgeApiGroupCommand
                          command.Subcommands.Add(KnowledgeUpdateKnowledgeDocumentCommandApiCommand.Create());
                          command.Subcommands.Add(KnowledgeUpdateKnowledgeGroupCommandApiCommand.Create());
                          command.Subcommands.Add(KnowledgeUploadKnowledgeGroupDocumentCommandApiCommand.Create());
+        CustomizeCommand(ref command);
         return command;
     }
 }

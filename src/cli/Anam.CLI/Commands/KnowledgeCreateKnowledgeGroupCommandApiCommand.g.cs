@@ -55,6 +55,8 @@ internal static partial class KnowledgeCreateKnowledgeGroupCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"create-knowledge-group", @"Create knowledge group
@@ -104,6 +106,7 @@ Create a new knowledge group for RAG.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

@@ -45,6 +45,8 @@ internal static partial class VoicesListVoicesCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"list-voices", @"List voices
@@ -85,6 +87,7 @@ Returns a paginated list of all voices.");
                                     cancellationToken).ConfigureAwait(false);
                                 }
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

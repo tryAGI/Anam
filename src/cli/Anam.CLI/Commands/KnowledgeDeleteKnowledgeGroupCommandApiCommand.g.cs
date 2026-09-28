@@ -13,6 +13,8 @@ internal static partial class KnowledgeDeleteKnowledgeGroupCommandApiCommand
         Description = @"",
     };
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"delete-knowledge-group", @"Delete knowledge group
@@ -33,6 +35,7 @@ Delete a knowledge group.");
 
                                 await CliRuntime.WriteSuccessAsync(parseResult, cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

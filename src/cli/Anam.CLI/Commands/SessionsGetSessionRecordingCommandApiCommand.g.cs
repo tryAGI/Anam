@@ -33,6 +33,8 @@ internal static partial class SessionsGetSessionRecordingCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"get-session-recording", @"Get session recording
@@ -59,6 +61,7 @@ Returns a presigned URL to download the session recording.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

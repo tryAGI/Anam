@@ -49,6 +49,8 @@ internal static partial class LLMsListLlmsCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"list-llms", @"List LLMs
@@ -92,6 +94,7 @@ Returns a list of all LLMs available to the organization.");
                                     cancellationToken).ConfigureAwait(false);
                                 }
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

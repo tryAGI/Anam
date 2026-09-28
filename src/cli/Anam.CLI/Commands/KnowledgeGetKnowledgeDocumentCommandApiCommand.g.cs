@@ -33,6 +33,8 @@ internal static partial class KnowledgeGetKnowledgeDocumentCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"get-knowledge-document", @"Get knowledge document
@@ -59,6 +61,7 @@ Get a single document by ID.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }
