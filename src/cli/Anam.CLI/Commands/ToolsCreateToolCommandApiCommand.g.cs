@@ -71,9 +71,9 @@ internal static partial class ToolsCreateToolCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-tool", @"Create tool
+        var command = new Command(commandName ?? @"create-tool", @"Create tool
 Create a new tool for function calling in persona sessions.");
                         command.Arguments.Add(NameOption);
                         command.Options.Add(DescriptionOption);

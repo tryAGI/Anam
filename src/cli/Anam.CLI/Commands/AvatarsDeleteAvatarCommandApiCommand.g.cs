@@ -15,9 +15,9 @@ internal static partial class AvatarsDeleteAvatarCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-avatar", @"Delete avatar
+        var command = new Command(commandName ?? @"delete-avatar", @"Delete avatar
 Delete an avatar by ID.");
                         command.Arguments.Add(Id);
 

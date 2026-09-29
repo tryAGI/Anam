@@ -70,9 +70,9 @@ internal static partial class AvatarsCreateAvatarCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-avatar", @"Create avatar
+        var command = new Command(commandName ?? @"create-avatar", @"Create avatar
 Create a new custom avatar from an image.");
                         command.Options.Add(DisplayName);
                         command.Options.Add(ImageFile);

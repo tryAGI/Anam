@@ -35,9 +35,9 @@ internal static partial class ToolsGetToolCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-tool", @"Get tool
+        var command = new Command(commandName ?? @"get-tool", @"Get tool
 Get a tool by ID.");
                         command.Arguments.Add(Id);
 

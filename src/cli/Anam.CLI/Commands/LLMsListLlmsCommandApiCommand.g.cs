@@ -51,9 +51,9 @@ internal static partial class LLMsListLlmsCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-llms", @"List LLMs
+        var command = new Command(commandName ?? @"list-llms", @"List LLMs
 Returns a list of all LLMs available to the organization.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

@@ -59,9 +59,9 @@ internal static partial class SessionsListSessionsCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-sessions", @"List sessions
+        var command = new Command(commandName ?? @"list-sessions", @"List sessions
 Returns a paginated list of all sessions for the organization.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

@@ -47,9 +47,9 @@ internal static partial class PersonasListPersonasCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-personas", @"List personas
+        var command = new Command(commandName ?? @"list-personas", @"List personas
 Returns a paginated list of all personas.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

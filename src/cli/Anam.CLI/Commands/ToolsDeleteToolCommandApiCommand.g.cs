@@ -15,9 +15,9 @@ internal static partial class ToolsDeleteToolCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-tool", @"Delete tool
+        var command = new Command(commandName ?? @"delete-tool", @"Delete tool
 Delete a tool (soft-deleted).");
                         command.Arguments.Add(Id);
 

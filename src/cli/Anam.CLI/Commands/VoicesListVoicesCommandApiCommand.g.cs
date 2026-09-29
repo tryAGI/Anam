@@ -47,9 +47,9 @@ internal static partial class VoicesListVoicesCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-voices", @"List voices
+        var command = new Command(commandName ?? @"list-voices", @"List voices
 Returns a paginated list of all voices.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

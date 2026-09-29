@@ -35,9 +35,9 @@ internal static partial class LLMsGetLlmCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-llm", @"Get LLM
+        var command = new Command(commandName ?? @"get-llm", @"Get LLM
 Get a specific LLM by ID.");
                         command.Arguments.Add(Id);
 

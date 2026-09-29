@@ -35,9 +35,9 @@ internal static partial class AvatarsGetAvatarCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-avatar", @"Get avatar
+        var command = new Command(commandName ?? @"get-avatar", @"Get avatar
 Returns an avatar by ID.");
                         command.Arguments.Add(Id);
 

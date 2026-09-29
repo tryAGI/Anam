@@ -35,9 +35,9 @@ internal static partial class KnowledgeGetKnowledgeDocumentDownloadCommandApiCom
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-knowledge-document-download", @"Get knowledge document download
+        var command = new Command(commandName ?? @"get-knowledge-document-download", @"Get knowledge document download
 Get a presigned download URL for a knowledge document.");
                         command.Arguments.Add(Id);
 

@@ -49,9 +49,9 @@ internal static partial class PersonasCreatePersonaCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-persona", @"Create persona
+        var command = new Command(commandName ?? @"create-persona", @"Create persona
 Create a new persona with avatar, voice, LLM, and system prompt configuration.");
                         command.Options.Add(PersonaConfigOptionSetOptions.Id);
                         command.Options.Add(PersonaConfigOptionSetOptions.NameOption);

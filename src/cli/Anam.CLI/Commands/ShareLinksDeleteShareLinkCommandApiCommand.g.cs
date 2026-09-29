@@ -15,9 +15,9 @@ internal static partial class ShareLinksDeleteShareLinkCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-share-link", @"Delete share link
+        var command = new Command(commandName ?? @"delete-share-link", @"Delete share link
 Delete a share link by ID.");
                         command.Arguments.Add(Id);
 

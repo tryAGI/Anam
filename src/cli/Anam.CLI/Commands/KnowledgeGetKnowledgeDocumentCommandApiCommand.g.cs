@@ -35,9 +35,9 @@ internal static partial class KnowledgeGetKnowledgeDocumentCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-knowledge-document", @"Get knowledge document
+        var command = new Command(commandName ?? @"get-knowledge-document", @"Get knowledge document
 Get a single document by ID.");
                         command.Arguments.Add(Id);
 

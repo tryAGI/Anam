@@ -63,9 +63,9 @@ internal static partial class ShareLinksUpdateShareLinkCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-share-link", @"Update share link
+        var command = new Command(commandName ?? @"update-share-link", @"Update share link
 Update a share link by ID.");
                         command.Arguments.Add(Id);
                         command.Options.Add(ExpiresInHours);
