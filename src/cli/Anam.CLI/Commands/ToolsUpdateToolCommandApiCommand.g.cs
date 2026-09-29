@@ -75,9 +75,9 @@ internal static partial class ToolsUpdateToolCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-tool", @"Update tool
+        var command = new Command(commandName ?? @"update-tool", @"Update tool
 Update an existing tool.");
                         command.Arguments.Add(Id);
                         command.Options.Add(NameOption);

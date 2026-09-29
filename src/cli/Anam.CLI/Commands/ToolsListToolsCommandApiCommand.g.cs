@@ -47,9 +47,9 @@ internal static partial class ToolsListToolsCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-tools", @"List tools
+        var command = new Command(commandName ?? @"list-tools", @"List tools
 Returns a list of all tools for the organization.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

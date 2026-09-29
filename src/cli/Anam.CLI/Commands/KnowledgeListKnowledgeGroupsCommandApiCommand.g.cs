@@ -31,9 +31,9 @@ internal static partial class KnowledgeListKnowledgeGroupsCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-knowledge-groups", @"List knowledge groups
+        var command = new Command(commandName ?? @"list-knowledge-groups", @"List knowledge groups
 Returns a list of all knowledge groups for the organization.");
 
 

@@ -15,9 +15,9 @@ internal static partial class PersonasDeletePersonaCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-persona", @"Delete persona
+        var command = new Command(commandName ?? @"delete-persona", @"Delete persona
 Delete a persona by ID.");
                         command.Arguments.Add(Id);
 

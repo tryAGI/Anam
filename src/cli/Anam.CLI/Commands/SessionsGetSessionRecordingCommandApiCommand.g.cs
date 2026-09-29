@@ -35,9 +35,9 @@ internal static partial class SessionsGetSessionRecordingCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-session-recording", @"Get session recording
+        var command = new Command(commandName ?? @"get-session-recording", @"Get session recording
 Returns a presigned URL to download the session recording.");
                         command.Arguments.Add(Id);
 

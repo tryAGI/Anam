@@ -15,9 +15,9 @@ internal static partial class LLMsDeleteLlmCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-llm", @"Delete LLM
+        var command = new Command(commandName ?? @"delete-llm", @"Delete LLM
 Delete an LLM configuration.");
                         command.Arguments.Add(Id);
 

@@ -64,9 +64,9 @@ internal static partial class ShareLinksCreateShareLinkCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-share-link", @"Create share link
+        var command = new Command(commandName ?? @"create-share-link", @"Create share link
 Create a new share link.");
                         command.Options.Add(PersonaId);
                         command.Options.Add(ExpiresInHours);

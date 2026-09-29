@@ -35,9 +35,9 @@ internal static partial class SessionsGetSessionTranscriptCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-session-transcript", @"Get session transcript
+        var command = new Command(commandName ?? @"get-session-transcript", @"Get session transcript
 Returns the conversation transcript for a session.");
                         command.Arguments.Add(Id);
 

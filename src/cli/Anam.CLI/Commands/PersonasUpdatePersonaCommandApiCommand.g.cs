@@ -54,9 +54,9 @@ internal static partial class PersonasUpdatePersonaCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-persona", @"Update persona
+        var command = new Command(commandName ?? @"update-persona", @"Update persona
 Update a persona by ID.");
                         command.Arguments.Add(Id);                        command.Options.Add(PersonaConfigOptionSetOptions.Id);
                         command.Options.Add(PersonaConfigOptionSetOptions.NameOption);

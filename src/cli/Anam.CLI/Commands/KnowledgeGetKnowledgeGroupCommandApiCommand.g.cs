@@ -35,9 +35,9 @@ internal static partial class KnowledgeGetKnowledgeGroupCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-knowledge-group", @"Get knowledge group
+        var command = new Command(commandName ?? @"get-knowledge-group", @"Get knowledge group
 Get a single knowledge group by ID.");
                         command.Arguments.Add(Id);
 

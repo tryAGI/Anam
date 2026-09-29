@@ -35,9 +35,9 @@ internal static partial class VoicesGetVoiceCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-voice", @"Get voice
+        var command = new Command(commandName ?? @"get-voice", @"Get voice
 Returns a voice by ID.");
                         command.Arguments.Add(Id);
 

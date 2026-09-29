@@ -35,9 +35,9 @@ internal static partial class KnowledgeListKnowledgeGroupDocumentsCommandApiComm
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-knowledge-group-documents", @"List knowledge group documents
+        var command = new Command(commandName ?? @"list-knowledge-group-documents", @"List knowledge group documents
 Get all documents in a knowledge group.");
                         command.Arguments.Add(Id);
 

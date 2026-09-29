@@ -63,9 +63,9 @@ internal static partial class AuthCreateSessionTokenCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-session-token", @"Create session token
+        var command = new Command(commandName ?? @"create-session-token", @"Create session token
 Creates a temporary session token for client-side use. The session token is valid for 1 hour.");
                         command.Options.Add(ClientLabel);
                         command.Options.Add(PersonaConfig);

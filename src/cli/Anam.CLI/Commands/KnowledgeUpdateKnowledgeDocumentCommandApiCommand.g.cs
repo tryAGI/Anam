@@ -57,9 +57,9 @@ internal static partial class KnowledgeUpdateKnowledgeDocumentCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-knowledge-document", @"Update knowledge document
+        var command = new Command(commandName ?? @"update-knowledge-document", @"Update knowledge document
 Update a document (rename).");
                         command.Arguments.Add(Id);
                         command.Options.Add(Filename);

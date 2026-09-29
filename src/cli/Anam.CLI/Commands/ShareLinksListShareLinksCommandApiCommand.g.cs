@@ -53,9 +53,9 @@ internal static partial class ShareLinksListShareLinksCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"list-share-links", @"List share links
+        var command = new Command(commandName ?? @"list-share-links", @"List share links
 Returns a list of all share links for the organization.");
                         command.Options.Add(Page);
                         command.Options.Add(PerPage);

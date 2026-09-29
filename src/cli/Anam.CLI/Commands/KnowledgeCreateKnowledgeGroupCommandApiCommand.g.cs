@@ -57,9 +57,9 @@ internal static partial class KnowledgeCreateKnowledgeGroupCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"create-knowledge-group", @"Create knowledge group
+        var command = new Command(commandName ?? @"create-knowledge-group", @"Create knowledge group
 Create a new knowledge group for RAG.");
                         command.Arguments.Add(NameOption);
                         command.Options.Add(DescriptionOption);

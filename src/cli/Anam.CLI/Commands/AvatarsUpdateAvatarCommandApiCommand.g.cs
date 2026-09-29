@@ -42,9 +42,9 @@ internal static partial class AvatarsUpdateAvatarCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-avatar", @"Update avatar
+        var command = new Command(commandName ?? @"update-avatar", @"Update avatar
 Update an avatar by ID (only display name can be updated).");
                         command.Arguments.Add(Id);
                         command.Options.Add(DisplayName);

@@ -105,9 +105,9 @@ internal static partial class LLMsUpdateLlmCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"update-llm", @"Update LLM
+        var command = new Command(commandName ?? @"update-llm", @"Update LLM
 Update an LLM configuration.");
                         command.Arguments.Add(Id);
                         command.Options.Add(DisplayName);

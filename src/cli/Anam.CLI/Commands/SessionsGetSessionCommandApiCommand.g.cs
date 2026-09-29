@@ -35,9 +35,9 @@ internal static partial class SessionsGetSessionCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-session", @"Get session
+        var command = new Command(commandName ?? @"get-session", @"Get session
 Returns a session by ID.");
                         command.Arguments.Add(Id);
 

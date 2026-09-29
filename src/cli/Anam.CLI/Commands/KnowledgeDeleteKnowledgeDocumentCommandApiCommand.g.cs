@@ -15,9 +15,9 @@ internal static partial class KnowledgeDeleteKnowledgeDocumentCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete-knowledge-document", @"Delete knowledge document
+        var command = new Command(commandName ?? @"delete-knowledge-document", @"Delete knowledge document
 Delete a document from a knowledge group.");
                         command.Arguments.Add(Id);
 
