@@ -18,7 +18,7 @@ namespace Anam.JsonConverters
                     var stringValue = reader.GetString();
                     if (stringValue != null)
                     {
-                        return global::Anam.UpdateToolRequestTypeExtensions.ToEnum(stringValue) ?? default;
+                        return global::Anam.UpdateToolRequestTypeExtensions.ToEnum(stringValue) ?? throw new global::System.Text.Json.JsonException($"Unknown value '{stringValue}' for global::Anam.UpdateToolRequestType.");
                     }
 
                     break;

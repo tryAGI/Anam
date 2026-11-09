@@ -18,7 +18,7 @@ namespace Anam.JsonConverters
                     var stringValue = reader.GetString();
                     if (stringValue != null)
                     {
-                        return global::Anam.CreateLlmRequestReasoningEffortExtensions.ToEnum(stringValue) ?? default;
+                        return global::Anam.CreateLlmRequestReasoningEffortExtensions.ToEnum(stringValue) ?? throw new global::System.Text.Json.JsonException($"Unknown value '{stringValue}' for global::Anam.CreateLlmRequestReasoningEffort.");
                     }
 
                     break;
